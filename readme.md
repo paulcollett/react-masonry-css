@@ -1,6 +1,6 @@
 A new masonary component powered by CSS to be fast loading and free of jQuery or other dependacies. Build specifically for React projects.
 
-[todo image: react logo + masonary grid graphic]
+*[todo image: react logo + masonary grid graphic]*
 
 ### 😎 Why? 
 
@@ -32,9 +32,10 @@ Plain ol, div columns to the resque!
 ### 😲 Simple Usage
 
 Add `react-masonry-css` to your project:
+
 `npm install react-masonry-css --save-dev`
 
-
+In your React Component...
 ```JSX
 import {Masonry} from 'react-masonry-css'
 
@@ -80,28 +81,15 @@ And, CSS:
 }
 ```
 
-Example, outputting an array of items:
-
-```JSX
-// todo, one day
-```
-
-Example, outputting an array of different items:
-
-```JSX
-// todo, one day
-```
-
 ### Options (Props)
 
-`breakpointCols={}` optional (defaults to 2 columns)
+`breakpointCols={{default: 4, 800: 2}}` optional (defaults to 2 columns)
 
-takes an object of key values. Each key is the breakpoint and the value is the number of the number of columns
+takes an object of key values. Each key is the breakpoint and the value is the number of columns
 
 ######Usage:
-Inline: `breakpointCols={{default: 4, 800: 2}}`
 
-```
+```JSX
 var myBreakpointsAndCols = {
   default: 4,
   1100: 3,
@@ -109,16 +97,31 @@ var myBreakpointsAndCols = {
   500: 1
 };
 
-`breakpointCols={myBreakpointsAndCols}`
+<Masonry breakpointCols={myBreakpointsAndCols}>
+  {/* array of JSX items */}
+</Masonry>
 ```
 
-`className` and other props are added to the container
-`columnClassName` optional, string, classname to add to each generated column
-`columnAttrs` optional, object, additional attributes to add to each generated column
+* `className` and other props are added to the container
+* `columnClassName` optional, string, classname to add to each generated column
+* `columnAttrs` optional, object, additional attributes to add to each generated column
+
+### More Examples
+
+**outputting an array of items:**
+```JSX
+// todo, one day
+```
+
+**outputting an array of different items**
+
+```JSX
+// todo, one day
+```
 
 ### Suggestions & Issues
 https://github.com/paulcollett/react-masonry-css
 
-*Contact me direct:*
-https://github.com/paulcollett
-paulcollett.com
+**Contact me direct:**
+* https://github.com/paulcollett
+* paulcollett.com
