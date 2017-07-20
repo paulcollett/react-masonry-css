@@ -1,0 +1,26 @@
+{
+  "name": "react-masonry-css",
+  "version": "0.0.0",
+  "description": "React Masonry component powered by CSS, dependancy free",
+  "main": "react-masonry-css.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paulcollett/react-masonry-css.git"
+  },
+  "keywords": [
+    "react",
+    "masonry",
+    "component",
+    "css",
+    "masonary"
+  ],
+  "author": "Paul Collett",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/paulcollett/react-masonry-css/issues"
+  },
+  "homepage": "https://github.com/paulcollett/react-masonry-css#readme"
+}
