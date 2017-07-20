@@ -1,7 +1,6 @@
-react-masonry-css
-
 A new masonary component powered by CSS to be fast loading and free of jQuery or other dependacies. Build specifically for React projects.
 
+[todo image: react logo + masonary grid graphic]
 
 ### Why?
 
@@ -15,31 +14,31 @@ Plain ol, div columns to the resque!
 
 #### What does this not do
 
-/ Animate when sorting
-/ Elements with different widths
-/ Need to render the DOM before running the layout
-/ Box alogorthem (not really needed if your elements have the same width)
-/ Break when resizing (at least, thats the goal)
+* Animate when sorting
+* Elements with different widths
+* Need to render the DOM before running the layout
+* Box alogorthem (not really needed if your elements have the same width)
+* Break when resizing (at least, thats the goal)
 
 #### What it can do
-/ Responsive! ..always
-/ IE 9+ CSS Support
-/ Depedancy & jQuery free
-/ Work with existing load animations (say fade in)
-/ CSS powered (Fast loading & Performant)
-/ Gutters
+* Responsive! ..always
+* IE 9+ CSS Support
+* Depedancy & jQuery free
+* Work with existing load animations (say fade in)
+* CSS powered (Fast loading & Performant)
+* Gutters
 
 
-### Usage
+### Simple Usage
 
 Add `react-masonry-css` to your project:
 `npm install react-masonry-css --save-dev`
 
 
-```
+```JSX
 import {Masonry} from 'react-masonry-css'
 
-...
+//...
 
 var breakpointColumnsObj = {
   default: 4,
@@ -48,7 +47,7 @@ var breakpointColumnsObj = {
   500: 1
 };
 
-...
+//...
 
 <Masonry
   breakpointCols={breakpointColumnsObj}
@@ -64,8 +63,7 @@ var breakpointColumnsObj = {
 ```
 
 And, CSS:
-```
-<style>
+```SCSS
 .my-masonry-grid {
     display: flex; // required
     margin-left: -20px; // optional, gutter size
@@ -80,18 +78,44 @@ And, CSS:
     background: grey;
     margin-bottom: 20px; // gap between boxes
 }
-</style>
 ```
-
 
 Example, outputting an array of items:
 
-```
+```JSX
 todo
 ```
 
 Example, outputting an array of different items:
 
-```
+```JSX
 todo
 ```
+
+### Options (Props)
+
+`breakpointCols` object, optional (defaults to 2 columns)
+
+######Usage:
+`breakpointCols={{default: 4}}`
+
+var myBreakpointsAndCols = {
+  default: 4,
+  1100: 3,
+  700: 2,
+  500: 1
+};
+
+`breakpointCols={myBreakpointsAndCols}`
+```
+
+`className` and other props are added to the container
+`columnClassName` optional, string, classname to add to each generated column
+`columnAttrs` optional, object, additional attributes to add to each generated column
+
+### Suggestions & Issues
+https://github.com/paulcollett/react-masonry-css
+
+*Contact me direct:*
+https://github.com/paulcollett
+paulcollett.com
