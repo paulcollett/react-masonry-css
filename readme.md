@@ -2,25 +2,25 @@ A new masonary component powered by CSS to be fast loading and free of jQuery or
 
 [todo image: react logo + masonary grid graphic]
 
-### Why?
+### 😎 Why? 
 
-We found a number of issues with existing solutions like react wrapped, Desandro Masonry. This plugin  required rendering the DOM on load and resoze before determining the layout. This lead to a slow, laggy experiance and would occasianly break the layout completly during resize. It also had depanancies on jQuery and while being feature packed it showed in the large file size.
+Existing solutions like React wrapped DeSandro Masonry, while great had downfalls in our react app. It required rendering the DOM on load and on during resize before determining the layout which lead to a slow, laggy experiance that would occasionally break the layout completely during resize. It also had depanancies on jQuery and while being feature packed it showed in the large file size.
 
 To combat this, we looked into the latest techniques using just CSS, including flexbox & grid which fell short outside of basic images. CSS columns came the closest and while trying to work around the ordering issue (orders down each column before reflowing to the next) the reflow and loss in ordering still occured when working with large elements.
 
 Plain ol, div columns to the resque!
 
-`react-masonry-css` Is a React Component with a simple interface to order items into the desired columns at specified breakpoints. With minimal CSS this leads to a quick, reliable solution that also has great browser support and performance.
+*`react-masonry-css`* Is a React Component with a simple interface to order items into the desired columns at specified breakpoints. With minimal CSS this leads to a quick, reliable solution that also has great browser support and performance.
 
-#### What does this not do
+#### 🏳️What doesn't this do
 
 * Animate when sorting
-* Elements with different widths
-* Need to render the DOM before running the layout
-* Box alogorthem (not really needed if your elements have the same width)
+* Work with elements with different widths
+* Box algorithm (not really needed if your elements have the same width)
 * Break when resizing (at least, thats the goal)
+* Load and render the DOM before sorting out the layout <= actually thats a plus
 
-#### What it can do
+#### 😄 What does this do
 * Responsive! ..always
 * IE 9+ CSS Support
 * Depedancy & jQuery free
@@ -29,7 +29,7 @@ Plain ol, div columns to the resque!
 * Gutters
 
 
-### Simple Usage
+### 😲 Simple Usage
 
 Add `react-masonry-css` to your project:
 `npm install react-masonry-css --save-dev`
@@ -83,22 +83,25 @@ And, CSS:
 Example, outputting an array of items:
 
 ```JSX
-todo
+// todo, one day
 ```
 
 Example, outputting an array of different items:
 
 ```JSX
-todo
+// todo, one day
 ```
 
 ### Options (Props)
 
-`breakpointCols` object, optional (defaults to 2 columns)
+`breakpointCols={}` optional (defaults to 2 columns)
+
+takes an object of key values. Each key is the breakpoint and the value is the number of the number of columns
 
 ######Usage:
-`breakpointCols={{default: 4}}`
+Inline: `breakpointCols={{default: 4, 800: 2}}`
 
+```
 var myBreakpointsAndCols = {
   default: 4,
   1100: 3,
