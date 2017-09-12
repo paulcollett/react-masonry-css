@@ -87,7 +87,7 @@ And, CSS:
 
 takes an object of key values. Each key is the breakpoint and the value is the number of columns
 
-######Usage:
+**Usage:**
 
 ```JSX
 var myBreakpointsAndCols = {
@@ -124,4 +124,4 @@ https://github.com/paulcollett/react-masonry-css
 
 **Contact me direct:**
 * https://github.com/paulcollett
-* paulcollett.com
+* http://paulcollett.com

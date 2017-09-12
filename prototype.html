@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+</head>
+<body>
+<div id="proto"></div>
+<script src="https://dummyjs.com/dummy.js"></script>
+<!--<script src="https://unpkg.com/react@0.14.8/dist/react.js"></script> 
+<script src="https://unpkg.com/react-dom@0.14.8/dist/react-dom.js"></script>-->
+<script src="https://unpkg.com/react@15/dist/react.js"></script>
+<script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.js"></script>
+
+<style>
+
+.my-masonry-grid {
+  display: flex;
+  margin-left: -20px;
+}
+.my-masonry-grid_column {
+  flex: 1;
+  width: 1px; /* force same column size regardless of contents (long text etc..) */
+  border-left: 20px solid transparent;
+  background-clip: padding-box;
+}
+
+.my-masonry-grid_column > div { /* change div to reference your elements in <masonry> */
+  background: grey;
+  margin-bottom: 20px;
+}
+
+</style>
+<script type="text/babel">
+//import React from 'react';
+//import PropTypes from 'prop-types';
+
+/*
+const propTypes = {
+  breakpointCols: React.PropTypes.object,
+  columnClassName: React.PropTypes.string,
+};
+*/
+const defaultProps = {
+  breakpointCols: {},
+  columnClassName: null
+};
+
+
+//export default class Masonry extends React.Component {
+
+class Masonry extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.reCalculateColumnCount = this.reCalculateColumnCount.bind(this);
+
+    // default state
+    this.state = {
+      columnCount: 2
+    };
+  }
+
+  componentDidMount() {
+    this.reCalculateColumnCount();
+
+    window.addEventListener('resize', this.reCalculateColumnCount);
+  }
+
+  componentWillReceiveProps() {
+    this.reCalculateColumnCount();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.reCalculateColumnCount);
+  }
+
+  reCalculateColumnCount() {
+    const windowWidth = (window ? window.innerWidth : null) || Infinity;
+    const breakpointColsObject = this.props.breakpointCols || {};
+    let matchedBreakpoint = Infinity;
+    let columns = Math.max(1, breakpointColsObject.default || 2);
+
+    for(let breakpoint in breakpointColsObject) {
+      const optBreakpoint = parseInt(breakpoint);
+      const isMaybeCurrentBreakpoint = windowWidth <= optBreakpoint && optBreakpoint < matchedBreakpoint;
+
+      if(optBreakpoint > 0 && isMaybeCurrentBreakpoint) {
+        matchedBreakpoint = optBreakpoint;
+        columns = Math.max(1, breakpointColsObject[breakpoint]);
+      }
+    }
+
+    if(columns !== this.state.columnCount) {
+      this.setState({
+        columnCount: columns
+      });
+    }
+  }
+
+  itemsInColumns() {
+    const currentColumnCount = this.state.columnCount;
+    const itemsInColumns = [];
+    const items = this.props.children || [];
+
+    for (let i = 0; i < items.length; i++) {
+      const columnIndex = i % currentColumnCount;
+
+      if(!itemsInColumns[columnIndex]) {
+        itemsInColumns[columnIndex] = [];
+      }
+
+      itemsInColumns[columnIndex].push(items[i]);
+    }
+
+    return itemsInColumns;
+  }
+
+  renderColumns() {
+    const childrenInColumns = this.itemsInColumns();
+
+    return childrenInColumns.map((items, columnIdx) => {
+      return (
+        <div
+          key={columnIdx}
+          className={this.props.columnClassName || 'my-masonry-grid_column'}
+          {...this.props.column}
+        >
+          {items}
+        </div>
+      );
+    });
+  }
+
+  render() {
+    const { breakpointCols, columnClassName, column, ...wrapperProps } = this.props;
+
+    return (
+      <div
+        className="my-masonry-grid"
+        {...wrapperProps}
+      >
+        {this.renderColumns()}
+      </div>
+    );
+  }
+}
+
+//Masonry.propTypes = propTypes;
+//Masonry.defaultProps = defaultProps;
+
+class Proto extends React.Component {
+  render() {
+
+    var breakpointColumnsObj = {
+      default: 4,
+      1100: 3,
+      700: 2,
+      500: 1
+    };
+
+    return <Masonry breakpointCols={breakpointColumnsObj}>
+      <div>Item #1</div>
+      <div>Item #2</div>
+      <div>Item #3</div>
+      <div>Item #4</div>
+      <div>Item #5</div>
+      <div>Item #6</div>
+      <div>Item #7</div>
+      <div>Item #8 kajsdhf lkasdhf laksjdfh lkasjhdfklashf lkajshfdlkasjhfklashflkashdfkljashfdkljahsdklfhalskdfjhaslkjdfhjsakdhf</div>
+      <div>Item #9</div>
+      <div>Item #10</div>
+      <div>Item #11</div>
+      <div>Item #12</div>
+      <div>Item #13</div>
+    </Masonry>;
+  }
+};
+
+ReactDOM.render(<Proto />, document.getElementById('proto'));
+</script>
+
+</body>
+</html>
