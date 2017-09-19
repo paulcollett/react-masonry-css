@@ -2,10 +2,24 @@
   "name": "react-masonry-css",
   "version": "0.0.2",
   "description": "React Masonry component powered by CSS, dependancy free",
-  "main": "react-masonry-css.js",
+  "main": "lib-es5/ReactMasonry.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run build:es5 && npm run build:demo",
+    "build:es5": "babel lib/ --out-dir lib-es5/",
+    "build:demo": "webpack",
+    "dev": "webpack-dev-server --progress --colors",
+    "prepublishOnly": "",
+    "prepublish": "npm run build:es5",
+    "postversion": "echo 'post version yo'",
+    "paul-postversion": "git tag v$npm_package_version && git push && git push --tags && npm publish --registry=https://registry.npmjs.org/",
+    "publish-package": ""
   },
+  "files": [
+    "lib",
+    "lib-es5",
+    "LICENSE",
+    "README.md"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/paulcollett/react-masonry-css.git"
@@ -22,5 +36,21 @@
   "bugs": {
     "url": "https://github.com/paulcollett/react-masonry-css/issues"
   },
-  "homepage": "https://github.com/paulcollett/react-masonry-css#readme"
+  "homepage": "https://github.com/paulcollett/react-masonry-css#readme",
+  "peerDependencies": {
+    "react": "^15.0.0",
+    "prop-types": "^15.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-object-assign": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "react": "^15.0.0",
+    "react-dom": "^15.0.0",
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.8.2"
+  }
 }
