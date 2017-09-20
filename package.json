@@ -8,9 +8,9 @@
     "build:es5": "babel lib/ --out-dir lib-es5/",
     "build:demo": "webpack",
     "dev": "webpack-dev-server --progress --colors",
-    "postversion": "git push && git push --tags",
+    "preversion": "npm run build",
     "prepublishOnly": "npm run build",
-    "publish-package": "npm publish --registry=https://registry.npmjs.org/"
+    "publish-package": "git push && git push --tags && npm publish --registry=https://registry.npmjs.org/"
   },
   "files": [
     "lib",
