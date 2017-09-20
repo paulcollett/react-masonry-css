@@ -66,18 +66,20 @@ var breakpointColumnsObj = {
 And, CSS:
 ```SCSS
 .my-masonry-grid {
-    display: flex; // required
-    margin-left: -20px; // optional, gutter size
+  display: flex;
+  margin-left: -20px;
 }
 .my-masonry-grid_column {
-    flex: 1; // required
-    border-left: 20px solid transparent; // optional, gutter size
-    background-clip: padding-box; // optional, unless you need a background on your column
+  flex: 1;
+  min-width: 0; // force same column size regardless of contents (long text etc..)
+  border-left: 20px solid transparent;
+  background-clip: padding-box;
 }
-// Optional, styling your items:
+
+// Style your items
 .my-masonry-grid_column > div {
-    background: grey;
-    margin-bottom: 20px; // gap between boxes
+  background: grey;
+  margin-bottom: 20px;
 }
 ```
 

@@ -4,6 +4,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width" />
 <style>
+body {margin: 20px;}
+* {box-sizing: border-box;}
 
 .my-masonry-grid {
   display: flex;
@@ -11,15 +13,17 @@
 }
 .my-masonry-grid_column {
   flex: 1;
-  width: 1px; /* force same column size regardless of contents (long text etc..) */
+  min-width: 0; /* force same column size regardless of contents (long text etc..) */
   border-left: 20px solid transparent;
   background-clip: padding-box;
 }
 
 /* Style your items */
 .my-masonry-grid_column > div { /* change div to reference your elements in <masonry> */
-  background: grey;
+  background: #ccc;
+  padding: 20px;
   margin-bottom: 20px;
+  overflow: hidden;
 }
 
 </style>
