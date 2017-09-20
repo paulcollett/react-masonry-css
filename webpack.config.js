@@ -10,11 +10,5 @@ module.exports = {
   },
   output: {
     filename: 'demo/demo-bundle.js'
-  },
-  // resolve: {
-  //   alias: {
-  //     'react': 'preact-compat',
-  //     'react-dom': 'preact-compat'
-  //   }
-  // }
+  }
 }
