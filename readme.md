@@ -121,6 +121,9 @@ var myBreakpointsAndCols = {
 // todo, one day
 ```
 
+### Use with Preact
+Currently you can use `react-masonry-css` with Preact (https://github.com/developit/preact) via the shim (https://github.com/developit/preact-compat)
+
 ### Suggestions & Issues
 https://github.com/paulcollett/react-masonry-css
 
