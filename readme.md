@@ -2,17 +2,17 @@ A new masonry component powered by CSS to be fast loading and free of jQuery or 
 
 ![image](https://user-images.githubusercontent.com/1904774/30821174-491e9670-a1d9-11e7-8b18-250d54858c4f.png)
 
-### 😎 Why? 
+### 😎 Why?
 
 Existing solutions like React wrapped DeSandro Masonry, while great had downfalls in our react app. It required rendering the DOM on load and on during resize before determining the layout which lead to a slow, laggy experiance that would occasionally break the layout completely during resize. It also had depanancies on jQuery and while being feature packed it showed in the large file size.
 
 To combat this, we looked into the latest techniques using just CSS, including flexbox & grid which fell short outside of basic images. CSS columns came the closest and while trying to work around the ordering issue (orders down each column before reflowing to the next) the reflow and loss in ordering still occured when working with large elements.
 
-Plain ol, div columns to the resque!
+Plain ol, div columns to the rescue!
 
 *`react-masonry-css`* Is a React Component with a simple interface to order items into the desired columns at specified breakpoints. With minimal CSS this leads to a quick, reliable solution that also has great browser support and performance.
 
-#### 🏳️What doesn't this do
+#### 🏳️ What doesn't this do
 
 * Animate when sorting
 * Work with elements with different widths
@@ -70,8 +70,6 @@ And, CSS:
   margin-left: -20px;
 }
 .my-masonry-grid_column {
-  flex: 1;
-  min-width: 0; // force same column size regardless of contents (long text etc..)
   border-left: 20px solid transparent;
   background-clip: padding-box;
 }
