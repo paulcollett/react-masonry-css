@@ -30,14 +30,21 @@ class App extends React.Component {
           className="my-masonry-grid"
           columnClassName="my-masonry-grid_column"
         >
-          {heights.map((h, i) => {
-            return <div 
-              style={{ height: h }}
-              key={`${i}-${h}`}
-            >
-              {i}. {h}
-            </div>
-          })}
+          {(heights)
+            ? heights
+              .map((h, i) => {
+                return <div 
+                  style={{ height: h }}
+                  key={`${i}-${h}`}
+                >
+                  {i}. {h}
+                </div>
+              })
+            : [
+              <div key={'0'}>Item #1</div>,
+              <div key={'1'}>Item #2</div>,
+            ]
+          }
         </Masonry>
       </div>
     );
