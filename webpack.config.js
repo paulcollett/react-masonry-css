@@ -1,14 +1,13 @@
 const webpack = require('webpack')
 
 module.exports = {
-  entry: './demo/demo.js',
-  devtool: 'source-map',
+  entry: './example/demo.js',
   module: {
     loaders: [
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ }
     ]
   },
   output: {
-    filename: 'demo/demo-bundle.js'
+    filename: 'example/demo-bundle.js'
   }
 }

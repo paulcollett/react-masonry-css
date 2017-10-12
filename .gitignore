@@ -1,3 +1,3 @@
 node_modules
-lib-es5
-demo/demo-bundle.js*
+dist-es5
+example/demo-bundle.js*
