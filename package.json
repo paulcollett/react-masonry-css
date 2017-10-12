@@ -13,10 +13,7 @@
     "publish-package": "git push && git push --tags && npm publish --registry=https://registry.npmjs.org/"
   },
   "files": [
-    "lib",
-    "lib-es5",
-    "LICENSE",
-    "README.md"
+    "dist"
   ],
   "repository": {
     "type": "git",
