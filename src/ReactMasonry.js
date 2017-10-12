@@ -38,22 +38,24 @@ class Masonry extends React.Component {
   }
 
   reCalculateColumnCount() {
-    const windowWidth = (window ? window.innerWidth : null) || Infinity;
-    const breakpointColsObject = this.props.breakpointCols || {};
+    const windowWidth = window && window.innerWidth || Infinity;
+    const breakpointColsObject = this.props.breakpointCols;
     let matchedBreakpoint = Infinity;
-    let columns = Math.max(1, breakpointColsObject.default || 2);
+    let columns = breakpointColsObject.default || 2;
 
     for(let breakpoint in breakpointColsObject) {
       const optBreakpoint = parseInt(breakpoint);
-      const isMaybeCurrentBreakpoint = windowWidth <= optBreakpoint && optBreakpoint < matchedBreakpoint;
+      const isCurrentBreakpoint = optBreakpoint > 0 && windowWidth <= optBreakpoint;
 
-      if(optBreakpoint > 0 && isMaybeCurrentBreakpoint) {
+      if(isCurrentBreakpoint && optBreakpoint < matchedBreakpoint) {
         matchedBreakpoint = optBreakpoint;
-        columns = Math.max(1, breakpointColsObject[breakpoint]);
+        columns = breakpointColsObject[breakpoint];
       }
     }
 
-    if(columns !== this.state.columnCount) {
+    columns = Math.max(1, parseInt(columns) || 1);
+
+    if(this.state.columnCount !== columns) {
       this.setState({
         columnCount: columns
       });

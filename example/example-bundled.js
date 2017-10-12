@@ -22615,22 +22615,24 @@ var Masonry = function (_React$Component) {
   }, {
     key: 'reCalculateColumnCount',
     value: function reCalculateColumnCount() {
-      var windowWidth = (window ? window.innerWidth : null) || Infinity;
-      var breakpointColsObject = this.props.breakpointCols || {};
+      var windowWidth = window && window.innerWidth || Infinity;
+      var breakpointColsObject = this.props.breakpointCols;
       var matchedBreakpoint = Infinity;
-      var columns = Math.max(1, breakpointColsObject.default || 2);
+      var columns = breakpointColsObject.default || 2;
 
       for (var breakpoint in breakpointColsObject) {
         var optBreakpoint = parseInt(breakpoint);
-        var isMaybeCurrentBreakpoint = windowWidth <= optBreakpoint && optBreakpoint < matchedBreakpoint;
+        var isCurrentBreakpoint = optBreakpoint > 0 && windowWidth <= optBreakpoint;
 
-        if (optBreakpoint > 0 && isMaybeCurrentBreakpoint) {
+        if (isCurrentBreakpoint && optBreakpoint < matchedBreakpoint) {
           matchedBreakpoint = optBreakpoint;
-          columns = Math.max(1, breakpointColsObject[breakpoint]);
+          columns = breakpointColsObject[breakpoint];
         }
       }
 
-      if (columns !== this.state.columnCount) {
+      columns = Math.max(1, parseInt(columns) || 1);
+
+      if (this.state.columnCount !== columns) {
         this.setState({
           columnCount: columns
         });
