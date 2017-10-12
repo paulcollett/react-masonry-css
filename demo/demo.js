@@ -13,20 +13,20 @@ class App extends React.Component {
   }
 
   render () {
-    var breakpointColumnsObj = {
-      default: 4,
-      1100: 3,
-      700: 2,
-      500: 1
-    };
+    var breakpointCols = [
+      [1, '(max-width: 500px)'],
+      [2, '(max-width: 700px)'],
+      [3, '(max-width: 1100px)'],
+      [4, '(min-width: 1101px)'],
+    ];
 
     return (
       <div>
         <Masonry
-          breakpointCols={breakpointColumnsObj}
+          breakpointCols={breakpointCols}
           className="my-masonry-grid"
           columnClassName="my-masonry-grid_column"
-          >
+        >
           <div>Item #1z</div>
           <div>Item #2</div>
         </Masonry>
