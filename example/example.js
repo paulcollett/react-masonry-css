@@ -20,6 +20,11 @@ class App extends React.Component {
       500: 1
     };
 
+    const items = [];
+
+    items.push(<div key="1">My First Item</div>);
+    items.push(<div key="2">Second Baby</div>);
+
     return (
       <div>
         <Masonry
@@ -44,6 +49,10 @@ class App extends React.Component {
           >
           <div>Item #1</div>
           <div>Item #2</div>
+        </Masonry>
+        <h4>Array Example</h4>
+        <Masonry breakpointCols={breakpointColumnsObj}>
+          {items.map(jsx => jsx)}
         </Masonry>
       </div>
     );

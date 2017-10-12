@@ -4,13 +4,13 @@ A new masonry component powered by CSS to be fast loading and free of jQuery or 
 
 ### 😎 Why?
 
-Existing solutions like React wrapped DeSandro Masonry, while great had downfalls in our react app. It required rendering the DOM on load and on during resize before determining the layout which lead to a slow, laggy experiance that would occasionally break the layout completely during resize. It also had depanancies on jQuery and while being feature packed it showed in the large file size.
+Existing solutions like React wrapped DeSandro Masonry, while great had downfalls in our react app. It required rendering the DOM on load and on during resize before determining the layout which lead to a slow, laggy experiance that would occasionally break the layout completely during resize. It also had depenancies on jQuery and while being feature packed it showed in the large file size.
 
-To combat this, we looked into the latest techniques using just CSS, including flexbox & grid which fell short outside of basic images. CSS columns came the closest and while trying to work around the ordering issue (orders down each column before reflowing to the next) the reflow and loss in ordering still occured when working with large elements.
+To combat this, we looked into the latest techniques using just CSS, including flexbox & grid which fell short for anything other than basic images. CSS columns came the closest though the ordering reflow (orders down each column before reflowing to the next) visually broke when working with large different sized  elements.
 
 Plain ol, div columns to the rescue!
 
-*`react-masonry-css`* Is a React Component with a simple interface to order items into the desired columns at specified breakpoints. With minimal CSS this leads to a quick, reliable solution that also has great browser support and performance.
+*`react-masonry-css`* Is a React Component with a simple interface to order items into the desired columns at specified breakpoints. With minimal CSS this leads to a quick, reliable solution that also has great browser support along with rendering performance.
 
 #### 🏳️ What doesn't this do
 
@@ -26,7 +26,7 @@ Plain ol, div columns to the rescue!
 * Depedancy & jQuery free
 * Work with existing load animations (say fade in)
 * CSS powered (Fast loading & Performant)
-* Gutters
+* Allow for Gutters
 
 
 ### 😲 Simple Usage
@@ -37,7 +37,7 @@ Add `react-masonry-css` to your project:
 
 In your React Component...
 ```JSX
-import {Masonry} from 'react-masonry-css'
+import Masonry from 'react-masonry-css'
 
 //...
 
@@ -66,7 +66,7 @@ var breakpointColumnsObj = {
 And, CSS:
 ```SCSS
 .my-masonry-grid {
-  display: flex;
+  display: flex; // Make sure to autoprefix for full x-browser support
   margin-left: -20px;
 }
 .my-masonry-grid_column {
@@ -75,7 +75,7 @@ And, CSS:
 }
 
 // Style your items
-.my-masonry-grid_column > div {
+.my-masonry-grid_column > div { // change div to reference your elements in <Masonry>
   background: grey;
   margin-bottom: 20px;
 }
@@ -110,13 +110,14 @@ var myBreakpointsAndCols = {
 
 **outputting an array of items:**
 ```JSX
-// todo, one day
-```
+const items = [];
 
-**outputting an array of different items**
+items.push(<div key="1">My First Item</div>);
+items.push(<div key="2">Second Baby</div>);
 
-```JSX
-// todo, one day
+<Masonry breakpointCols={myBreakpointsAndCols}>
+  {items.map(jsx => jsx)}
+</Masonry>
 ```
 
 ### Use with Preact

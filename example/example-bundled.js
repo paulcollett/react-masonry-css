@@ -10321,6 +10321,19 @@ var App = function (_React$Component) {
         500: 1
       };
 
+      var items = [];
+
+      items.push(_react2.default.createElement(
+        'div',
+        { key: '1' },
+        'My First Item'
+      ));
+      items.push(_react2.default.createElement(
+        'div',
+        { key: '2' },
+        'Second Baby'
+      ));
+
       return _react2.default.createElement(
         'div',
         null,
@@ -10394,6 +10407,18 @@ var App = function (_React$Component) {
             null,
             'Item #2'
           )
+        ),
+        _react2.default.createElement(
+          'h4',
+          null,
+          'Array Example'
+        ),
+        _react2.default.createElement(
+          _ReactMasonry2.default,
+          { breakpointCols: breakpointColumnsObj },
+          items.map(function (jsx) {
+            return jsx;
+          })
         )
       );
     }
