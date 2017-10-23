@@ -10280,9 +10280,9 @@ var _reactDom = __webpack_require__(98);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _ReactMasonry = __webpack_require__(184);
+var _reactMasonryCss = __webpack_require__(184);
 
-var _ReactMasonry2 = _interopRequireDefault(_ReactMasonry);
+var _reactMasonryCss2 = _interopRequireDefault(_reactMasonryCss);
 
 var _dummyjs = __webpack_require__(187);
 
@@ -10296,7 +10296,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// Placeholder library
+// Placeholder text library
 
 
 var App = function (_React$Component) {
@@ -10321,104 +10321,41 @@ var App = function (_React$Component) {
         500: 1
       };
 
-      var items = [];
-
-      items.push(_react2.default.createElement(
-        'div',
-        { key: '1' },
-        'My First Item'
-      ));
-      items.push(_react2.default.createElement(
-        'div',
-        { key: '2' },
-        'Second Baby'
-      ));
+      var items = new Array(8).fill().map(function (item, i) {
+        return _react2.default.createElement(
+          'div',
+          { key: i },
+          _react2.default.createElement(
+            'strong',
+            null,
+            'Item #',
+            i + 1
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _dummyjs2.default.text('20,60')
+          )
+        );
+      });
 
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
-          _ReactMasonry2.default,
+          'button',
+          { onClick: this.forceUpdate.bind(this, null) },
+          'Refresh'
+        ),
+        _react2.default.createElement('hr', { style: { visibility: 'hidden' } }),
+        _react2.default.createElement(
+          _reactMasonryCss2.default,
           {
             breakpointCols: breakpointColumnsObj,
             className: 'my-masonry-grid',
             columnClassName: 'my-masonry-grid_column'
           },
-          _react2.default.createElement(
-            'div',
-            null,
-            _dummyjs2.default.text('20,60')
-          ),
-          _react2.default.createElement(
-            'div',
-            null,
-            _dummyjs2.default.text('20,60')
-          ),
-          _react2.default.createElement(
-            'div',
-            null,
-            _dummyjs2.default.text('20,60')
-          ),
-          _react2.default.createElement(
-            'div',
-            null,
-            _dummyjs2.default.text('20,60')
-          ),
-          _react2.default.createElement(
-            'div',
-            null,
-            _dummyjs2.default.text('20,60')
-          ),
-          _react2.default.createElement(
-            'div',
-            null,
-            _dummyjs2.default.text('20,60')
-          ),
-          _react2.default.createElement(
-            'div',
-            null,
-            _dummyjs2.default.text('20,60')
-          ),
-          _react2.default.createElement(
-            'div',
-            null,
-            _dummyjs2.default.text('20,60')
-          )
-        ),
-        _react2.default.createElement(
-          'h4',
-          null,
-          'Masonry retaining width with few items'
-        ),
-        _react2.default.createElement(
-          _ReactMasonry2.default,
-          {
-            breakpointCols: breakpointColumnsObj,
-            className: 'my-masonry-grid',
-            columnClassName: 'my-masonry-grid_column'
-          },
-          _react2.default.createElement(
-            'div',
-            null,
-            'Item #1'
-          ),
-          _react2.default.createElement(
-            'div',
-            null,
-            'Item #2'
-          )
-        ),
-        _react2.default.createElement(
-          'h4',
-          null,
-          'Array Example'
-        ),
-        _react2.default.createElement(
-          _ReactMasonry2.default,
-          { breakpointCols: breakpointColumnsObj },
-          items.map(function (jsx) {
-            return jsx;
-          })
+          items
         )
       );
     }
@@ -22568,16 +22505,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var propTypes = {
-  breakpointCols: _propTypes2.default.object,
-  columnClassName: _propTypes2.default.string
-};
-
-var defaultProps = {
-  breakpointCols: {},
-  columnClassName: null
-};
-
 var Masonry = function (_React$Component) {
   _inherits(Masonry, _React$Component);
 
@@ -22600,7 +22527,10 @@ var Masonry = function (_React$Component) {
     value: function componentDidMount() {
       this.reCalculateColumnCount();
 
-      window.addEventListener('resize', this.reCalculateColumnCount);
+      // window may not be avaliable in some environments
+      if (window) {
+        window.addEventListener('resize', this.reCalculateColumnCount);
+      }
     }
   }, {
     key: 'componentWillReceiveProps',
@@ -22610,13 +22540,23 @@ var Masonry = function (_React$Component) {
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      window.removeEventListener('resize', this.reCalculateColumnCount);
+      if (window) {
+        window.removeEventListener('resize', this.reCalculateColumnCount);
+      }
     }
   }, {
     key: 'reCalculateColumnCount',
     value: function reCalculateColumnCount() {
       var windowWidth = window && window.innerWidth || Infinity;
       var breakpointColsObject = this.props.breakpointCols;
+
+      // Allow passing a single number instead of an object
+      if (parseInt(breakpointColsObject) > 0) {
+        breakpointColsObject = {
+          default: breakpointColsObject
+        };
+      }
+
       var matchedBreakpoint = Infinity;
       var columns = breakpointColsObject.default || 2;
 
@@ -22660,18 +22600,21 @@ var Masonry = function (_React$Component) {
   }, {
     key: 'renderColumns',
     value: function renderColumns() {
-      var _this2 = this;
+      var _props = this.props,
+          column = _props.column,
+          columnClassName = _props.columnClassName;
 
       var childrenInColumns = this.itemsInColumns();
+      var w = 100 / childrenInColumns.length + '%';
 
-      return childrenInColumns.map(function (items, columnIdx) {
+      return childrenInColumns.map(function (items, i) {
         return _react2.default.createElement(
           'div',
           _extends({
-            key: columnIdx,
-            className: _this2.props.columnClassName || 'my-masonry-grid_column',
-            style: { width: 100 / childrenInColumns.length + '%' }
-          }, _this2.props.column),
+            key: i,
+            className: columnClassName,
+            style: { width: w }
+          }, column),
           items
         );
       });
@@ -22679,17 +22622,15 @@ var Masonry = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _props = this.props,
-          breakpointCols = _props.breakpointCols,
-          columnClassName = _props.columnClassName,
-          column = _props.column,
-          wrapperProps = _objectWithoutProperties(_props, ['breakpointCols', 'columnClassName', 'column']);
+      var _props2 = this.props,
+          breakpointCols = _props2.breakpointCols,
+          columnClassName = _props2.columnClassName,
+          column = _props2.column,
+          wrapperProps = _objectWithoutProperties(_props2, ['breakpointCols', 'columnClassName', 'column']);
 
       return _react2.default.createElement(
         'div',
-        _extends({
-          className: 'my-masonry-grid'
-        }, wrapperProps),
+        wrapperProps,
         this.renderColumns()
       );
     }
@@ -22698,8 +22639,16 @@ var Masonry = function (_React$Component) {
   return Masonry;
 }(_react2.default.Component);
 
-Masonry.propTypes = propTypes;
-Masonry.defaultProps = defaultProps;
+Masonry.propTypes = {
+  breakpointCols: _propTypes2.default.object,
+  columnClassName: _propTypes2.default.string
+};
+
+Masonry.defaultProps = {
+  breakpointCols: {},
+  className: 'my-masonry-grid',
+  columnClassName: 'my-masonry-grid_column'
+};
 
 exports.default = Masonry;
 

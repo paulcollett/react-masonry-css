@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>React Masonry Css Example</title>
+<meta name="viewport" content="width=device-width" />
+<meta name="google" content="notranslate" />
+<style>
+* {box-sizing: border-box;}
+body{margin: 3%;font-family: sans-serif;font-size: 14px;line-height:1.5}
+label{ font-weight: bold }
+
+.my-masonry-grid {
+  display: flex;
+  margin-left: -20px;
+}
+.my-masonry-grid_column {
+  border-left: 20px solid transparent;
+  background-clip: padding-box;
+}
+
+/* Style your items */
+.my-masonry-grid_column > div { /* change div to reference your elements in <masonry> */
+  background: #ccc;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+</style>
+</head>
+<body>
+<a href="https://github.com/paulcollett/react-masonry-css">&larr; GitHub / Docs</a>
+<h2 style="margin: 0">react-masonry-css example</h2>
+<p style="margin-top: 0">A React masonry component powered by CSS to rendered fast and be free of jQuery or other dependacies. Build specifically for React projects.</p>
+
+<!--
+  Example React code can be found at:
+  https://github.com/paulcollett/react-masonry-css/blob/master/docs/index.js
+-->
+<div id="app"></div>
+<script src="index-built.js"></script>
+</body>
+</html>
