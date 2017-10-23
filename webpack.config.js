@@ -1,13 +1,13 @@
 const webpack = require('webpack')
 
 module.exports = {
-  entry: './docs/index.js',
+  entry: './docs/demo.js',
   module: {
     loaders: [
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ }
     ]
   },
   output: {
-    filename: './docs/index-built.js'
+    filename: './docs/demo-built.js'
   }
 }

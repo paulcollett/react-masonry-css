@@ -150,7 +150,7 @@ We can add the following to the above CSS to futher adjust the layout between sc
 Currently you can use `react-masonry-css` with Preact (https://github.com/developit/preact) via the shim (https://github.com/developit/preact-compat)
 
 ### Suggestions & Issues
-https://github.com/paulcollett/react-masonry-css
+https://github.com/paulcollett/react-masonry-css/issues/
 
 **Contact me direct:**
 * https://github.com/paulcollett
