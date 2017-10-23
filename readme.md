@@ -105,7 +105,7 @@ const breakpointColumnsObj = {
 
 ### Example Demo
 
-https://paulcollett.github.io/react-masonry-css/
+https://paulcollett.github.io/react-masonry-css/demo/
 
 ### Common usage
 
