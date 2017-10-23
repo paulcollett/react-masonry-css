@@ -1,10 +1,10 @@
-A new masonry component powered by CSS to be fast loading and free of jQuery or other dependacies. Build specifically for React projects.
+A new masonry component powered by CSS to be fast loading and free of jQuery or other dependencies. Build specifically for React projects.
 
 ![image](https://user-images.githubusercontent.com/1904774/30821174-491e9670-a1d9-11e7-8b18-250d54858c4f.png)
 
 ### 😎 Why?
 
-Existing solutions like React wrapped DeSandro Masonry, while great had downfalls in our react app. It required rendering the DOM on load and on during resize before determining the layout which lead to a slow, laggy experiance that would occasionally break the layout completely during resize. It also had depenancies on jQuery and while being feature packed it showed in the large file size.
+Existing solutions like React wrapped DeSandro Masonry, while great had downfalls in our react app. It required rendering the DOM on load and on during resize before determining the layout which lead to a slow, laggy experiance that in our experiance would occasionally break the layout completely during resize. It also had depenancies on jQuery and while being feature packed it showed in resulting file size.
 
 To combat this, we looked into the latest techniques using just CSS, including flexbox & grid which fell short for anything other than basic images. CSS columns came the closest though the ordering reflow (orders down each column before reflowing to the next) visually broke when working with large different sized  elements.
 
@@ -41,7 +41,41 @@ import Masonry from 'react-masonry-css'
 
 //...
 
-var breakpointColumnsObj = {
+<Masonry
+  breakpointCols={3}
+  className="my-masonry-grid"
+  columnClassName="my-masonry-grid_column">
+  {/* array of JSX items */}
+</Masonry>
+```
+
+And, CSS:
+```SCSS
+.my-masonry-grid {
+  display: -webkit-box; // Not needed if autoprefixing
+  display: -ms-flexbox; // Not needed if autoprefixing
+  display: flex;
+  margin-left: -30px; // gutter size offset
+}
+.my-masonry-grid_column {
+  border-left: 30px solid transparent; // gutter size
+  background-clip: padding-box;
+}
+
+// Style your items
+.my-masonry-grid_column > div { // change div to reference your elements you put in <Masonry>
+  background: grey;
+  margin-bottom: 30px;
+}
+```
+
+### Resposive Breakpoints
+
+Different columns can be specified by passing an object containing key's of the window widths and their value as the number of columns. To have a fallback value, use the `default` key.
+
+```JSX
+
+const breakpointColumnsObj = {
   default: 4,
   1100: 3,
   700: 2,
@@ -60,64 +94,56 @@ var breakpointColumnsObj = {
   <div>My Element</div>
   <div>My Element</div>
 </Masonry>
-
-```
-
-And, CSS:
-```SCSS
-.my-masonry-grid {
-  display: flex; // Make sure to autoprefix for full x-browser support
-  margin-left: -20px;
-}
-.my-masonry-grid_column {
-  border-left: 20px solid transparent;
-  background-clip: padding-box;
-}
-
-// Style your items
-.my-masonry-grid_column > div { // change div to reference your elements in <Masonry>
-  background: grey;
-  margin-bottom: 20px;
-}
 ```
 
 ### Options (Props)
 
-`breakpointCols={{default: 4, 800: 2}}` optional (defaults to 2 columns)
-
-takes an object of key values. Each key is the breakpoint and the value is the number of columns
-
-**Usage:**
-
-```JSX
-var myBreakpointsAndCols = {
-  default: 4,
-  1100: 3,
-  700: 2,
-  500: 1
-};
-
-<Masonry breakpointCols={myBreakpointsAndCols}>
-  {/* array of JSX items */}
-</Masonry>
-```
-
+* `breakpointCols={{default: 4, 800: 2}}` optional (defaults to 2 columns)
 * `className` and other props are added to the container
 * `columnClassName` optional, string, classname to add to each generated column
 * `columnAttrs` optional, object, additional attributes to add to each generated column
 
-### More Examples
+### Example Demo
+
+https://paulcollett.github.io/react-masonry-css/
+
+### Common usage
 
 **outputting an array of items:**
 ```JSX
-const items = [];
+var items = [
+  {id: 1, name: 'My First Item'},
+  {id: 2, name: 'Another item'},
+  {id: 3, name: 'Third Item'},
+  {id: 4, name: 'Here is the Fourth'},
+  {id: 5, name: 'High Five'}
+];
 
-items.push(<div key="1">My First Item</div>);
-items.push(<div key="2">Second Baby</div>);
+// Convert array to JSX items
+items = items.map(function(item) {
+  return <div key={item.id}>{item.name}</div>
+});
 
 <Masonry breakpointCols={myBreakpointsAndCols}>
-  {items.map(jsx => jsx)}
+  {items}
 </Masonry>
+```
+
+### Optional, Responsive gutters
+We can add the following to the above CSS to futher adjust the layout between screen sizes.
+```SCSS
+// Optional, different gutter size on mobile
+@media (max-width: 650px) {
+  .my-masonry-grid {
+    margin-left: -15px; // gutter size offset
+  }
+  .my-masonry-grid_column {
+    border-left-width: 15px; // gutter size offset
+  }
+  .my-masonry-grid_column > div {
+    margin-bottom: 15px; // space between items
+  }
+}
 ```
 
 ### Use with Preact
