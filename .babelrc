@@ -1,7 +1,4 @@
 {
-  "presets":[
-    "react",
-    "env"
-  ],
+  "presets":[],
   "plugins": ["transform-object-assign", "transform-object-rest-spread"]
 }

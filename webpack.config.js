@@ -4,7 +4,15 @@ module.exports = {
   entry: './demo/demo.js',
   module: {
     loaders: [
-      { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ }
+      {
+        test: /\.js$/,
+        use: {
+          loader: 'babel-loader', options: { // also inherits .babelrc options
+            presets: ['env', 'react']
+          }
+        },
+        exclude: /node_modules/
+      }
     ]
   },
   output: {

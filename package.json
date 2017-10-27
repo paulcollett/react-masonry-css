@@ -2,11 +2,12 @@
   "name": "react-masonry-css",
   "version": "1.0.6",
   "description": "React Masonry component powered by CSS, dependancy free",
-  "main": "dist/react-masonry-css.es2015.js",
-  "module": "src/react-masonry-css.js",
+  "main": "dist/react-masonry-css.es5.js",
+  "module": "dist/react-masonry-css.es6.js",
   "scripts": {
-    "build": "npm run build:es5 && npm run build:demo",
-    "build:es5": "babel src --out-file dist/react-masonry-css.es2015.js",
+    "build": "npm run build:es5 && npm run build:es6 && npm run build:demo",
+    "build:es5": "babel src --out-file dist/react-masonry-css.es5.js --presets=react,env",
+    "build:es6": "babel src --out-file dist/react-masonry-css.es6.js --presets=react",
     "build:demo": "webpack",
     "dev": "webpack-dev-server --progress --colors",
     "preversion": "npm run build",
@@ -14,8 +15,7 @@
     "publish-package": "git push && git push --tags && npm publish --registry=https://registry.npmjs.org/"
   },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "repository": {
     "type": "git",
