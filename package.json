@@ -3,7 +3,6 @@
   "version": "1.0.7",
   "description": "React Masonry component powered by CSS, dependancy free",
   "main": "dist/react-masonry-css.es5.js",
-  "module": "dist/react-masonry-css.es6.js",
   "scripts": {
     "build": "npm run build:es5 && npm run build:es6 && npm run build:demo",
     "build:es5": "babel src --out-file dist/react-masonry-css.es5.js --presets=react,env",
