@@ -45,7 +45,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
-    "dummyjs": "^1.0.0",
+    "dummyjs": "^1.1.3",
     "react": "^15.0.0",
     "react-dom": "^15.0.0",
     "webpack": "^3.6.0",
