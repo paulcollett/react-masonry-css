@@ -2,11 +2,11 @@
   "name": "react-masonry-css",
   "version": "1.0.8",
   "description": "React Masonry component powered by CSS, dependancy free",
-  "main": "dist/react-masonry-css.es5.js",
+  "main": "dist/react-masonry-css.cjs.js",
+  "unpkg": "dist/react-masonry-css.browser.js",
+  "delivrjs": "dist/react-masonry-css.browser.js",
   "scripts": {
-    "build": "npm run build:es5 && npm run build:es6 && npm run build:demo",
-    "build:es5": "babel src --out-file dist/react-masonry-css.es5.js --presets=react,env",
-    "build:es6": "babel src --out-file dist/react-masonry-css.es6.js --presets=react",
+    "build": "node build.js && npm run build:demo",
     "build:demo": "webpack",
     "dev": "webpack-dev-server --progress --colors",
     "preversion": "npm run build",
@@ -48,6 +48,8 @@
     "dummyjs": "^1.1.3",
     "react": "^15.0.0",
     "react-dom": "^15.0.0",
+    "rollup": "^0.50.0",
+    "rollup-plugin-babel": "^3.0.2",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.8.2"
   }

@@ -22483,6 +22483,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(50);
@@ -22495,27 +22497,13 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _extends = Object.assign || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }return target;
-};
-
-function _objectWithoutProperties(obj, keys) {
-  var target = {};for (var i in obj) {
-    if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
-  }return target;
-}
 
 var Masonry = function (_React$Component) {
   _inherits(Masonry, _React$Component);
@@ -22612,32 +22600,39 @@ var Masonry = function (_React$Component) {
   }, {
     key: 'renderColumns',
     value: function renderColumns() {
-      var _props2 = this.props,
-          column = _props2.column,
-          columnClassName = _props2.columnClassName;
+      var _props = this.props,
+          column = _props.column,
+          columnClassName = _props.columnClassName;
 
       var childrenInColumns = this.itemsInColumns();
       var w = 100 / childrenInColumns.length + '%';
 
       return childrenInColumns.map(function (items, i) {
-        return _react2.default.createElement('div', _extends({
-          key: i,
-          className: columnClassName,
-          style: { width: w }
-        }, column), items);
+        return _react2.default.createElement(
+          'div',
+          _extends({
+            key: i,
+            className: columnClassName,
+            style: { width: w }
+          }, column),
+          items
+        );
       });
     }
   }, {
     key: 'render',
     value: function render() {
-      var _props = this.props,
-          breakpointCols = _props.breakpointCols,
-          columnClassName = _props.columnClassName,
-          column = _props.column,
-          wrapperProps = _objectWithoutProperties(_props, ['breakpointCols', 'columnClassName', 'column']);
+      var _props2 = this.props,
+          breakpointCols = _props2.breakpointCols,
+          columnClassName = _props2.columnClassName,
+          column = _props2.column,
+          wrapperProps = _objectWithoutProperties(_props2, ['breakpointCols', 'columnClassName', 'column']);
 
-
-      return _react2.default.createElement('div', wrapperProps, this.renderColumns());
+      return _react2.default.createElement(
+        'div',
+        wrapperProps,
+        this.renderColumns()
+      );
     }
   }]);
 
@@ -22762,14 +22757,10 @@ module.exports = function() {
 
 /***/ }),
 /* 187 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-(function (global, factory) {
-	 true ? module.exports = factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(global.Dummy = factory());
-}(this, (function () { 'use strict';
-
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var rand = function (min, max) {
   if(!min || !max) { return min; }
   min = Math.floor(min);
@@ -22786,10 +22777,18 @@ var repeat = function (str, count) {
   })(str + '', Math.floor(count), '');
 };
 
-var Utils = {rand: rand, repeat: repeat};
+// array.from polyfill (!IE)
+var arr = function (nodelist) {
+  return Array.from ? Array.from(nodelist) : Array.prototype.slice.call(nodelist);
+};
 
-var text = function (argString) {
-  var wordCount = (argString + '').split(',');
+var Utils = {rand: rand, repeat: repeat, arr: arr};
+
+var text = function () {
+  var args = [], len = arguments.length;
+  while ( len-- ) args[ len ] = arguments[ len ];
+
+  var wordCount = args.join(',').split(','); // allow for mixed argument input ie. ('20,30') or (20, 30)
   wordCount = Utils.rand(wordCount[0], wordCount[1]) || 10;
 
   var lib = 'lorem ipsum dolor sit amet consectetur adipiscing elit nunc euismod vel ' +
@@ -22805,24 +22804,31 @@ var text = function (argString) {
   return lib.charAt(0).toUpperCase() + lib.slice(1);
 };
 
-var src = function (argString, el) {
-  var size = '404';
+var src = function () {
+  var args = [], len = arguments.length;
+  while ( len-- ) args[ len ] = arguments[ len ];
 
-  if(argString) {
-    size = argString;
-  } else if(el) {
+  // allow for mixed argument input ie. (200, 200, el) ('200x200', el), ('200')
+  var el = args[args.length - 1] instanceof HTMLImageElement ? args.pop() : null;
+  var size = args.splice(0, 2).join('x');
+
+  if(!size && el) {
     size = [parseInt(el.getAttribute('width') || el.offsetWidth), parseInt(el.getAttribute('height') || el.offsetHeight)].filter(function (v) {return !!v}).join('x');
-    size =  size || (el.parentNode && el.parentNode.offsetWidth) || '404';
+    size =  size || (el.parentNode && el.parentNode.offsetWidth);
   }
 
   // split size to allow for random ranges
-  size = (size + '').split('x').map(function (a){ return Utils.rand(a.split(',')[0], a.split(',')[1]); });
+  size = (size + '' || '404').split('x').map(function (a){ return Utils.rand(a.split(',')[0] || '404', a.split(',')[1]); });
 
   var w = size[0];
-  var h = (size[1]||size[0]);
-  var text = (el.getAttribute('data-text') || (w + '×' + h));
-  var bgColor = (el.getAttribute('data-color') || '#ccc');
-  var textColor = (el.getAttribute('data-text-color') || '#888');
+  var h = size[1] || size[0];
+
+  // Getting a little messy, but idea is to test next argument to see if it isn't a color (not #..) then remove it from the arguments list and return. Otherwise fallback..
+  var text = args[0] && /^\w{2,}/.test(args[0]) ? args.splice(0, 1).pop() : ( el && el.getAttribute('data-text') || (w + '×' + h) );
+  var bgColor = (el && el.getAttribute('data-color') || args[0] || '#ccc');
+  var textColor = (el && el.getAttribute('data-text-color') || args[1] || '#888');
+
+  // Better logic out there?
   var fontSize = (w / 3.5 / (text.length * 0.3)) - text.length;
 
   return 'data:image/svg+xml,'
@@ -22840,89 +22846,7 @@ var Dummy$1 = {
   src: src
 };
 
-var updateDom = function() {
-  // copy element support
-  for (var i = 0; i < 3; i++) { Array.from(document.querySelectorAll('[data-copy]'))
-    .sort(function (a, b) { return a.compareDocumentPosition(b) & 2 ? 1 : -1; }) // inner first then parents
-    .forEach(function (el) {
-      var selector = el.getAttribute('data-copy');
-      var elToCopy = document.querySelector(selector) || document.getElementById(selector) || document.getElementsByClassName(selector)[0];
-
-      if(!elToCopy) {
-        elToCopy = {outerHTML: 'data-copy="' + selector + '" element not found'};
-      }
-
-      el.outerHTML = (elToCopy.tagName == 'SCRIPT' || elToCopy.tagName == 'TEMPLATE') ? elToCopy.innerHTML : elToCopy.outerHTML;
-  }); }
-
-  // kitchen sink
-  document.querySelectorAll('[data-dummy=sink]').forEach(function (el) {
-    el.removeAttribute('data-dummy');
-
-    var tags = 'h1,h2,h3,h4,h5,ul,ol,table,blockquote'.split(',').join(',p,').split(',');
-
-    tags = tags.map(function (tag) { return ("<" + tag + " data-dummy></" + tag + ">"); }).join('')
-      + '<hr /><p data-dummy="150">This <strong>is a longer</strong> <em>paragraph</em> <a href="#">with a link</a>. </p>'
-      + '<img data-dummy="800" /><p data-dummy="70" data-repeat=4></p>';
-
-    el.innerHTML += tags;
-  });
-
-  // list support
-  document.querySelectorAll('ul[data-dummy], ol[data-dummy]').forEach(function (el) {
-    el.removeAttribute('data-dummy');
-
-    el.innerHTML += Utils.repeat('<li data-dummy></li>', 4);
-  });
-
-  // table support
-  document.querySelectorAll('table[data-dummy]').forEach(function (el) {
-    el.removeAttribute('data-dummy');
-
-    el.innerHTML = "<thead><tr><th data-dummy=2 data-repeat=3><th></tr></thead>\n      <tbody><tr data-repeat=3><td data-dummy=4 data-repeat=3></td></tr></tbody>";
-  });
-
-  // repeater support
-  Array.from(document.querySelectorAll('[data-repeat]'))
-    .sort(function (a, b) { return a.compareDocumentPosition(b) & 2 ? -1 : 1; })
-    .forEach(function (el) {
-      var amount = el.getAttribute('data-repeat');
-      el.outerHTML = Utils.repeat(el.outerHTML, Utils.rand(amount.split(',')[0], amount.split(',')[1]) || 4);
-    });
-
-  // image support
-  document.querySelectorAll('img[data-dummy]').forEach(function (el) {
-    el.src = Dummy$1.src(el.getAttribute('data-dummy'), el);
-
-    el.removeAttribute('data-dummy');
-  });
-
-  var dummyTextEls = Array.from(document.querySelectorAll('[data-dummy]'));
-
-  // prevent page translation to latin containing majority dummy text
-  var meta = document.createElement('meta');
-  meta.name = 'google';
-  meta.content = 'notranslate';
-  dummyTextEls.length && document.querySelector('head').appendChild(meta);
-
-  // text support
-  dummyTextEls
-    .sort(function (a, b) { return a.compareDocumentPosition(b) & 2 ? -1 : 1; })
-    .forEach(function (el) {
-      el.innerHTML += Dummy$1.text(el.getAttribute('data-dummy'));
-    });
-
-};
-
-if(document && document.addEventListener) {
-  document.addEventListener('DOMContentLoaded', updateDom);
-}
-
-Dummy$1.updateDom = updateDom;
-
-return Dummy$1;
-
-})));
+/* harmony default export */ __webpack_exports__["default"] = (Dummy$1);
 
 
 /***/ })

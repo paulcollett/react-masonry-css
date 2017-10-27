@@ -8,7 +8,8 @@ module.exports = {
         test: /\.js$/,
         use: {
           loader: 'babel-loader', options: { // also inherits .babelrc options
-            presets: ['env', 'react']
+            presets: ['env', 'react'],
+            "plugins": ["transform-object-assign", "transform-object-rest-spread"]
           }
         },
         exclude: /node_modules/

@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDom from 'react-dom'
-import Masonry from '../dist/react-masonry-css.es6'
+import Masonry from '../src/react-masonry-css'
 
 // Placeholder text library
 import Dummy from 'dummyjs'
