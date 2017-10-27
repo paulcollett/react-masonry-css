@@ -1,6 +1,6 @@
 {
   "name": "react-masonry-css",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "React Masonry component powered by CSS, dependancy free",
   "main": "dist/react-masonry-css.cjs.js",
   "unpkg": "dist/react-masonry-css.browser.js",
