@@ -1,12 +1,13 @@
 {
   "name": "react-masonry-css",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "React Masonry component powered by CSS, dependancy free",
-  "main": "dist/react-masonry-css.cjs.js",
-  "unpkg": "dist/react-masonry-css.browser.js",
-  "delivrjs": "dist/react-masonry-css.browser.js",
+  "main": "dist/react-masonry-css.es5.js",
   "scripts": {
-    "build": "node build.js && npm run build:demo",
+    "build": "npm run build:es5 && npm run build:es6 && npm run build:demo",
+    "build:es5": "babel src --out-file dist/react-masonry-css.es5.js --presets=react,env",
+    "build:es6": "babel src --out-file dist/react-masonry-css.es6.js --presets=react",
+    "build:wip_new": "node build.js && npm run build:demo",
     "build:demo": "webpack",
     "dev": "webpack-dev-server --progress --colors",
     "preversion": "npm run build",
