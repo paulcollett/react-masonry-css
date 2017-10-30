@@ -37,11 +37,7 @@
   "homepage": "https://github.com/paulcollett/react-masonry-css#readme",
   "peerDependencies": {
     "react": "^16.0.0",
-<<<<<<< HEAD
     "prop-types": "^15.6.0"
-=======
-    "prop-types": "^15.0.0"
->>>>>>> 35b73741afa64731332719a8aa3b282ae301a86a
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
