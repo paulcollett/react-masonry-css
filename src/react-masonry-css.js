@@ -69,6 +69,7 @@ class Masonry extends React.Component {
     const currentColumnCount = this.state.columnCount;
     const itemsInColumns = new Array(currentColumnCount);
     const items = this.props.children || [];
+    const {itemStyle, itemClassName} = this.props;
 
     for (let i = 0; i < items.length; i++) {
       const columnIndex = i % currentColumnCount;
@@ -77,24 +78,32 @@ class Masonry extends React.Component {
         itemsInColumns[columnIndex] = [];
       }
 
-      itemsInColumns[columnIndex].push(items[i]);
+      itemsInColumns[columnIndex].push(
+        <div className={itemClassName} style={itemStyle}>
+          {items[i]}
+        </div>
+      );
     }
 
     return itemsInColumns;
   }
 
   renderColumns() {
-    const { column, columnClassName } = this.props;
+    const { column, columnClassName, gutter } = this.props;
     const childrenInColumns = this.itemsInColumns();
-    const w = `${100 / childrenInColumns.length}%`;
+    const width = `${100 / childrenInColumns.length}%`;
 
     return childrenInColumns.map((items, i) => {
       return <div
         key={i}
         className={columnClassName}
-        style={{ width: w }}
+        style={{
+          width,
+          borderLeft: `${gutter}px solid transparent`,
+          backgroundClip: 'padding-box'
+        }}
         {...column}
-      >
+             >
         {items}
       </div>;
     });
@@ -102,14 +111,16 @@ class Masonry extends React.Component {
 
   render() {
     const {
-      breakpointCols,
-      columnClassName,
-      column,
+      gutter,
       ...wrapperProps
     } = this.props;
 
     return (
       <div
+        style={{
+          display: 'flex',
+          marginLeft: -gutter
+        }}
         {...wrapperProps}
       >
         {this.renderColumns()}
@@ -121,12 +132,18 @@ class Masonry extends React.Component {
 Masonry.propTypes = {
   breakpointCols: PropTypes.object,
   columnClassName: PropTypes.string,
+  itemClassName: PropTypes.string,
+  gutter: PropTypes.number,
+  itemStyle: PropTypes.object
 };
 
 Masonry.defaultProps = {
   breakpointCols: {},
   className: 'my-masonry-grid',
-  columnClassName: 'my-masonry-grid_column'
+  columnClassName: 'my-masonry-grid_column',
+  itemClassName: 'my-masonry-grid_item',
+  gutter: 30,
+  itemStyle: {}
 };
 
 export default Masonry;
