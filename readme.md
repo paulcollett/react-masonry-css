@@ -35,47 +35,23 @@ Add `react-masonry-css` to your project:
 
 `npm install react-masonry-css --save-dev`
 
-In your React Component...
-```JSX
-import Masonry from 'react-masonry-css'
+|            Props |            default value            |  type   | description                                                                    |
+|-----------------:|:-----------------------------------:|:-------:|:------------------------------------------------------------------------------:|
+|   breakpointCols |             {default: 2}            | Object  | Breakpoints of the columns.  [Responsive Breakpoints](#responsive-breakpoints) |
+|        itemStyle |                  {}                 | Object  | Direct styling of the individual elements.                                     |
+|      columnAttrs |                  {}                 | Object  | Additional attributes to add to each generated column.                         |
+|           gutter |                  30                 | Integer | The gutter size given in pixels.                                               |
+|        className |          'my-masonry-grid'          | String  | Class name of the Masonry component.                                           |
+|  columnClassName |       'my-masonry-grid_column'      | String  | Class name of the columns.                                                     |
+|    itemClassName |        'my-masonry-grid_item'       | String  | Class name of the items.                                                       |
 
-//...
-
-<Masonry
-  breakpointCols={3}
-  className="my-masonry-grid"
-  columnClassName="my-masonry-grid_column">
-  {/* array of JSX items */}
-</Masonry>
-```
-
-And, CSS:
-```SCSS
-.my-masonry-grid {
-  display: -webkit-box; // Not needed if autoprefixing
-  display: -ms-flexbox; // Not needed if autoprefixing
-  display: flex;
-  margin-left: -30px; // gutter size offset
-}
-.my-masonry-grid_column {
-  border-left: 30px solid transparent; // gutter size
-  background-clip: padding-box;
-}
-
-// Style your items
-.my-masonry-grid_column > div { // change div to reference your elements you put in <Masonry>
-  background: grey;
-  margin-bottom: 30px;
-}
-```
-
-### Resposive Breakpoints
+### Responsive Breakpoints
 
 Different columns can be specified by passing an object containing key's of the window widths and their value as the number of columns. To have a fallback value, use the `default` key.
 
 ```JSX
 
-const breakpointColumnsObj = {
+const breakpointCols = {
   default: 4,
   1100: 3,
   700: 2,
@@ -84,24 +60,13 @@ const breakpointColumnsObj = {
 
 //...
 
-<Masonry
-  breakpointCols={breakpointColumnsObj}
-  className="my-masonry-grid"
-  columnClassName="my-masonry-grid_column"
-  >
+<Masonry {...{breakpointCols}}>
   <div>My Element</div>
   <div>My Element</div>
   <div>My Element</div>
   <div>My Element</div>
 </Masonry>
 ```
-
-### Options (Props)
-
-* `breakpointCols={{default: 4, 800: 2}}` optional (defaults to 2 columns)
-* `className` and other props are added to the container
-* `columnClassName` optional, string, classname to add to each generated column
-* `columnAttrs` optional, object, additional attributes to add to each generated column
 
 ### Example Demo
 
@@ -111,7 +76,7 @@ https://paulcollett.github.io/react-masonry-css/demo/
 
 **outputting an array of items:**
 ```JSX
-var items = [
+const items = [
   {id: 1, name: 'My First Item'},
   {id: 2, name: 'Another item'},
   {id: 3, name: 'Third Item'},
@@ -120,17 +85,18 @@ var items = [
 ];
 
 // Convert array to JSX items
-items = items.map(function(item) {
-  return <div key={item.id}>{item.name}</div>
-});
+items = items.map(({id, name}) => (
+    <div key={item.id}>{item.name}</div>
+  )
+);
 
-<Masonry breakpointCols={myBreakpointsAndCols}>
+<Masonry>
   {items}
 </Masonry>
 ```
 
 ### Optional, Responsive gutters
-We can add the following to the above CSS to futher adjust the layout between screen sizes.
+We can add the following to the above CSS to further adjust the layout between screen sizes.
 ```SCSS
 // Optional, different gutter size on mobile
 @media (max-width: 650px) {
@@ -140,7 +106,7 @@ We can add the following to the above CSS to futher adjust the layout between sc
   .my-masonry-grid_column {
     border-left-width: 15px; // gutter size offset
   }
-  .my-masonry-grid_column > div {
+  .my-masonry-grid_item {
     margin-bottom: 15px; // space between items
   }
 }
