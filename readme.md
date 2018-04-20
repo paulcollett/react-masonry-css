@@ -50,7 +50,7 @@ import Masonry from 'react-masonry-css'
 ```
 
 And, CSS:
-```SCSS
+```css
 .my-masonry-grid {
   display: -webkit-box; // Not needed if autoprefixing
   display: -ms-flexbox; // Not needed if autoprefixing
@@ -131,7 +131,7 @@ items = items.map(function(item) {
 
 ### Optional, Responsive gutters
 We can add the following to the above CSS to futher adjust the layout between screen sizes.
-```SCSS
+```css
 // Optional, different gutter size on mobile
 @media (max-width: 650px) {
   .my-masonry-grid {
