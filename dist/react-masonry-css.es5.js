@@ -37,8 +37,15 @@ var Masonry = function (_React$Component) {
     _this.reCalculateColumnCount = _this.reCalculateColumnCount.bind(_this);
 
     // default state
+    var columnCount = void 0;
+    if (_this.props.breakpointCols && _this.props.breakpointCols.default) {
+      columnCount = _this.props.breakpointCols.default;
+    } else {
+      columnCount = 2;
+    }
+
     _this.state = {
-      columnCount: 2
+      columnCount: columnCount
     };
     return _this;
   }
