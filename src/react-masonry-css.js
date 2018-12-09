@@ -8,8 +8,15 @@ class Masonry extends React.Component {
     this.reCalculateColumnCount = this.reCalculateColumnCount.bind(this);
 
     // default state
+    let columnCount
+    if (this.props.breakpointCols && this.props.breakpointCols.default) {
+      columnCount = this.props.breakpointCols.default
+    } else {
+      columnCount = 2
+    }
+
     this.state = {
-      columnCount: 2
+      columnCount
     };
   }
 

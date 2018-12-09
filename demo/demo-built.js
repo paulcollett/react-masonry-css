@@ -19648,8 +19648,15 @@ var Masonry = function (_React$Component) {
     _this.reCalculateColumnCount = _this.reCalculateColumnCount.bind(_this);
 
     // default state
+    var columnCount = void 0;
+    if (_this.props.breakpointCols && _this.props.breakpointCols.default) {
+      columnCount = _this.props.breakpointCols.default;
+    } else {
+      columnCount = 2;
+    }
+
     _this.state = {
-      columnCount: 2
+      columnCount: columnCount
     };
     return _this;
   }
@@ -20449,13 +20456,18 @@ var repeat = function (str, count) {
 };
 
 // array.from polyfill (!IE)
+var arr = function (nodelist) {
+  return Array.from ? Array.from(nodelist) : Array.prototype.slice.call(nodelist);
+};
+
+var Utils = {rand: rand, repeat: repeat, arr: arr};
 
 var text = function () {
   var args = [], len = arguments.length;
   while ( len-- ) args[ len ] = arguments[ len ];
 
   var wordCount = args.join(',').split(','); // allow for mixed argument input ie. ('20,30') or (20, 30)
-  wordCount = rand(wordCount[0], wordCount[1]) || 10;
+  wordCount = Utils.rand(wordCount[0], wordCount[1]) || 10;
 
   var lib = 'lorem ipsum dolor sit amet consectetur adipiscing elit nunc euismod vel ' +
     'dolor nec viverra nullam auctor enim condimentum odio laoreet libero ' +
@@ -20465,7 +20477,7 @@ var text = function () {
 
   var libRepeat = Math.ceil(wordCount/lib.split(' ').length);
 
-  lib = repeat(lib, libRepeat).split(' ').sort(function () { return 0.5 - Math.random(); }).slice(0, wordCount).join(' ');
+  lib = Utils.repeat(lib, libRepeat).split(' ').sort(function () { return 0.5 - Math.random(); }).slice(0, wordCount).join(' ');
 
   return lib.charAt(0).toUpperCase() + lib.slice(1);
 };
@@ -20484,7 +20496,7 @@ var src = function () {
   }
 
   // split size to allow for random ranges
-  size = (size + '' || '404').split('x').map(function (a){ return rand(a.split(',')[0] || '404', a.split(',')[1]); });
+  size = (size + '' || '404').split('x').map(function (a){ return Utils.rand(a.split(',')[0] || '404', a.split(',')[1]); });
 
   var w = size[0];
   var h = size[1] || size[0];
