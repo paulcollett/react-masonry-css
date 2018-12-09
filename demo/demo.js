@@ -24,6 +24,7 @@ class App extends React.Component {
       return (
         <div key={i}>
           <strong>Item #{i + 1}</strong>
+          <div><img src={Dummy.src(500,400)} style={{width:'100%'}} /></div>
           <div>{Dummy.text('20,60')}</div>
         </div>
       )
@@ -40,6 +41,7 @@ class App extends React.Component {
         >
           {items}
         </Masonry>
+        <div style={{marginTop: '60px',color:'#555'}}>Placeholder images and dummy text from "dummyjs" react module. See <a href="http://dummyjs.com" target="_blank">DummyJs.com</a></div>
       </div>
     );
   }

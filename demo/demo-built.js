@@ -912,6 +912,11 @@ var App = function (_React$Component) {
           _react2.default.createElement(
             'div',
             null,
+            _react2.default.createElement('img', { src: _dummyjs2.default.src(500, 400), style: { width: '100%' } })
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
             _dummyjs2.default.text('20,60')
           )
         );
@@ -934,6 +939,16 @@ var App = function (_React$Component) {
             columnClassName: 'my-masonry-grid_column'
           },
           items
+        ),
+        _react2.default.createElement(
+          'div',
+          { style: { marginTop: '60px', color: '#555' } },
+          'Placeholder images and dummy text from "dummyjs" react module. See ',
+          _react2.default.createElement(
+            'a',
+            { href: 'http://dummyjs.com', target: '_blank' },
+            'DummyJs.com'
+          )
         )
       );
     }
