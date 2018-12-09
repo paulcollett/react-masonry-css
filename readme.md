@@ -147,6 +147,11 @@ We can add the following to the above CSS to further adjust the layout between s
 ### Use with Preact
 Currently you can use `react-masonry-css` with Preact (https://github.com/developit/preact) via the shim (https://github.com/developit/preact-compat)
 
+### DummyJS
+Improve your frontend builds with dynamic placeholder images and dummy text from [DummyJs.com](https://dummyjs.com/).
+Made with love from the same dev.
+https://www.npmjs.com/package/dummyjs
+
 ### Suggestions & Issues
 https://github.com/paulcollett/react-masonry-css/issues/
 
