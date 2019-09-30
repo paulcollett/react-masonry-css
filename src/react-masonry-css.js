@@ -29,7 +29,7 @@ class Masonry extends React.Component {
     }
   }
 
-  componentWillReceiveProps() {
+  componentDidUpdate() {
     this.reCalculateColumnCount();
   }
 
