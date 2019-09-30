@@ -61,8 +61,8 @@ var Masonry = function (_React$Component) {
       }
     }
   }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps() {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
       this.reCalculateColumnCount();
     }
   }, {
