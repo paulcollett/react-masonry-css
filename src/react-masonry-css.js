@@ -5,7 +5,9 @@ class Masonry extends React.Component {
   constructor(props) {
     super(props);
 
+    // Correct scope for when access externally
     this.reCalculateColumnCount = this.reCalculateColumnCount.bind(this);
+    this.reCalculateColumnCountDebounce = this.reCalculateColumnCountDebounce.bind(this);
 
     // default state
     let columnCount
@@ -25,7 +27,7 @@ class Masonry extends React.Component {
 
     // window may not be available in some environments
     if(window) {
-      window.addEventListener('resize', this.reCalculateColumnCount);
+      window.addEventListener('resize', this.reCalculateColumnCountDebounce);
     }
   }
 
@@ -35,8 +37,23 @@ class Masonry extends React.Component {
 
   componentWillUnmount() {
     if(window) {
-      window.removeEventListener('resize', this.reCalculateColumnCount);
+      window.removeEventListener('resize', this.reCalculateColumnCountDebounce);
     }
+  }
+
+  reCalculateColumnCountDebounce() {
+    if(!window || !window.requestAnimationFrame) {  // IE10+
+      this.reCalculateColumnCount();
+      return;
+    }
+
+    if(window.cancelAnimationFrame) { // IE10+
+      window.cancelAnimationFrame(this._lastRecalculateAnimationFrame);
+    }
+
+    this._lastRecalculateAnimationFrame = window.requestAnimationFrame(() => {
+      this.reCalculateColumnCount();
+    });
   }
 
   reCalculateColumnCount() {

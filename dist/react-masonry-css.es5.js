@@ -32,9 +32,11 @@ var Masonry = function (_React$Component) {
   function Masonry(props) {
     _classCallCheck(this, Masonry);
 
+    // Correct scope for when access externally
     var _this = _possibleConstructorReturn(this, (Masonry.__proto__ || Object.getPrototypeOf(Masonry)).call(this, props));
 
     _this.reCalculateColumnCount = _this.reCalculateColumnCount.bind(_this);
+    _this.reCalculateColumnCountDebounce = _this.reCalculateColumnCountDebounce.bind(_this);
 
     // default state
     var columnCount = void 0;
@@ -57,7 +59,7 @@ var Masonry = function (_React$Component) {
 
       // window may not be available in some environments
       if (window) {
-        window.addEventListener('resize', this.reCalculateColumnCount);
+        window.addEventListener('resize', this.reCalculateColumnCountDebounce);
       }
     }
   }, {
@@ -69,8 +71,28 @@ var Masonry = function (_React$Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       if (window) {
-        window.removeEventListener('resize', this.reCalculateColumnCount);
+        window.removeEventListener('resize', this.reCalculateColumnCountDebounce);
       }
+    }
+  }, {
+    key: 'reCalculateColumnCountDebounce',
+    value: function reCalculateColumnCountDebounce() {
+      var _this2 = this;
+
+      if (!window || !window.requestAnimationFrame) {
+        // IE10+
+        this.reCalculateColumnCount();
+        return;
+      }
+
+      if (window.cancelAnimationFrame) {
+        // IE10+
+        window.cancelAnimationFrame(this._lastRecalculateAnimationFrame);
+      }
+
+      this._lastRecalculateAnimationFrame = window.requestAnimationFrame(function () {
+        _this2.reCalculateColumnCount();
+      });
     }
   }, {
     key: 'reCalculateColumnCount',

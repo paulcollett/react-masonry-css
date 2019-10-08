@@ -885,19 +885,46 @@ var App = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-    _this.state = {};
-    return _this;
-  }
-
-  _createClass(App, [{
-    key: 'render',
-    value: function render() {
-      var breakpointColumnsObj = {
+    _this.state = {
+      breakpointColumnsObj: {
         default: 4,
         1100: 3,
         700: 2,
         500: 1
-      };
+      }
+    };
+    return _this;
+  }
+
+  _createClass(App, [{
+    key: 'handleChange',
+    value: function handleChange() {
+      // Previously changed? Revert back to initial state
+      if (this.initialState) {
+        this.setState(this.initialState);
+
+        delete this.initialState;
+
+        // Capture initial state and update
+      } else {
+        this.initialState = this.state;
+
+        this.setState({
+          breakpointColumnsObj: {
+            default: 5,
+            1100: 4,
+            700: 3,
+            500: 2
+          }
+        });
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var breakpointColumnsObj = this.state.breakpointColumnsObj;
 
       var items = new Array(8).fill().map(function (item, i) {
         return _react2.default.createElement(
@@ -927,8 +954,18 @@ var App = function (_React$Component) {
         null,
         _react2.default.createElement(
           'button',
-          { onClick: this.forceUpdate.bind(this, null) },
+          { onClick: function onClick() {
+              return _this2.forceUpdate();
+            } },
           'Refresh'
+        ),
+        ' ',
+        _react2.default.createElement(
+          'button',
+          { onClick: function onClick() {
+              return _this2.handleChange();
+            } },
+          'Change "breakpointCols"'
         ),
         _react2.default.createElement('hr', { style: { visibility: 'hidden' } }),
         _react2.default.createElement(
@@ -19658,9 +19695,11 @@ var Masonry = function (_React$Component) {
   function Masonry(props) {
     _classCallCheck(this, Masonry);
 
+    // Correct scope for when access externally
     var _this = _possibleConstructorReturn(this, (Masonry.__proto__ || Object.getPrototypeOf(Masonry)).call(this, props));
 
     _this.reCalculateColumnCount = _this.reCalculateColumnCount.bind(_this);
+    _this.reCalculateColumnCountDebounce = _this.reCalculateColumnCountDebounce.bind(_this);
 
     // default state
     var columnCount = void 0;
@@ -19683,7 +19722,7 @@ var Masonry = function (_React$Component) {
 
       // window may not be available in some environments
       if (window) {
-        window.addEventListener('resize', this.reCalculateColumnCount);
+        window.addEventListener('resize', this.reCalculateColumnCountDebounce);
       }
     }
   }, {
@@ -19695,8 +19734,28 @@ var Masonry = function (_React$Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       if (window) {
-        window.removeEventListener('resize', this.reCalculateColumnCount);
+        window.removeEventListener('resize', this.reCalculateColumnCountDebounce);
       }
+    }
+  }, {
+    key: 'reCalculateColumnCountDebounce',
+    value: function reCalculateColumnCountDebounce() {
+      var _this2 = this;
+
+      if (!window || !window.requestAnimationFrame) {
+        // IE10+
+        this.reCalculateColumnCount();
+        return;
+      }
+
+      if (window.cancelAnimationFrame) {
+        // IE10+
+        window.cancelAnimationFrame(this._lastRecalculateAnimationFrame);
+      }
+
+      this._lastRecalculateAnimationFrame = window.requestAnimationFrame(function () {
+        _this2.reCalculateColumnCount();
+      });
     }
   }, {
     key: 'reCalculateColumnCount',
