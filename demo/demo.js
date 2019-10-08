@@ -9,16 +9,40 @@ class App extends React.Component {
   constructor (props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      breakpointColumnsObj: {
+        default: 4,
+        1100: 3,
+        700: 2,
+        500: 1
+      }
+    };
+  }
+
+  handleChange() {
+    // Previously changed? Revert back to initial state
+    if(this.initialState) {
+      this.setState(this.initialState);
+
+      delete this.initialState;
+
+    // Capture initial state and update
+    } else {
+      this.initialState = this.state;
+
+      this.setState({
+        breakpointColumnsObj: {
+          default: 5,
+          1100: 4,
+          700: 3,
+          500: 2
+        }
+      });
+    }
   }
 
   render () {
-    const breakpointColumnsObj = {
-      default: 4,
-      1100: 3,
-      700: 2,
-      500: 1
-    };
+    const breakpointColumnsObj = this.state.breakpointColumnsObj;
 
     const items = new Array(8).fill().map((item, i) => {
       return (
@@ -32,7 +56,9 @@ class App extends React.Component {
 
     return (
       <div>
-        <button onClick={this.forceUpdate.bind(this, null)}>Refresh</button>
+        <button onClick={() => this.forceUpdate()}>Refresh</button>
+        {' '}
+        <button onClick={() => this.handleChange()}>Change "breakpointCols"</button>
         <hr style={{visibility: 'hidden'}} />
         <Masonry
           breakpointCols={breakpointColumnsObj}
