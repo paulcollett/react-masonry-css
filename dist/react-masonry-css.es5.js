@@ -55,7 +55,7 @@ var Masonry = function (_React$Component) {
     value: function componentDidMount() {
       this.reCalculateColumnCount();
 
-      // window may not be avaliable in some environments
+      // window may not be available in some environments
       if (window) {
         window.addEventListener('resize', this.reCalculateColumnCount);
       }
