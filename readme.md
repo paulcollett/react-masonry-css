@@ -30,7 +30,7 @@ Between flexbox, css columns, css grid we settled on plain ol' div's and a dab o
 
 Add `react-masonry-css` to your project:
 
-`npm install react-masonry-css --save-dev`
+`npm install react-masonry-css --save`
 
 In your React Component...
 ```jsx
