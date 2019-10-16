@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 class Masonry extends React.Component {
   constructor(props) {
@@ -7,14 +7,16 @@ class Masonry extends React.Component {
 
     // Correct scope for when access externally
     this.reCalculateColumnCount = this.reCalculateColumnCount.bind(this);
-    this.reCalculateColumnCountDebounce = this.reCalculateColumnCountDebounce.bind(this);
+    this.reCalculateColumnCountDebounce = this.reCalculateColumnCountDebounce.bind(
+      this
+    );
 
     // default state
-    let columnCount
+    let columnCount;
     if (this.props.breakpointCols && this.props.breakpointCols.default) {
-      columnCount = this.props.breakpointCols.default
+      columnCount = this.props.breakpointCols.default;
     } else {
-      columnCount = 2
+      columnCount = 2;
     }
 
     this.state = {
@@ -26,8 +28,8 @@ class Masonry extends React.Component {
     this.reCalculateColumnCount();
 
     // window may not be available in some environments
-    if(window) {
-      window.addEventListener('resize', this.reCalculateColumnCountDebounce);
+    if (window) {
+      window.addEventListener("resize", this.reCalculateColumnCountDebounce);
     }
   }
 
@@ -36,18 +38,20 @@ class Masonry extends React.Component {
   }
 
   componentWillUnmount() {
-    if(window) {
-      window.removeEventListener('resize', this.reCalculateColumnCountDebounce);
+    if (window) {
+      window.removeEventListener("resize", this.reCalculateColumnCountDebounce);
     }
   }
 
   reCalculateColumnCountDebounce() {
-    if(!window || !window.requestAnimationFrame) {  // IE10+
+    if (!window || !window.requestAnimationFrame) {
+      // IE10+
       this.reCalculateColumnCount();
       return;
     }
 
-    if(window.cancelAnimationFrame) { // IE10+
+    if (window.cancelAnimationFrame) {
+      // IE10+
       window.cancelAnimationFrame(this._lastRecalculateAnimationFrame);
     }
 
@@ -57,24 +61,25 @@ class Masonry extends React.Component {
   }
 
   reCalculateColumnCount() {
-    const windowWidth = window && window.innerWidth || Infinity;
+    const windowWidth = (window && window.innerWidth) || Infinity;
     let breakpointColsObject = this.props.breakpointCols;
 
     // Allow passing a single number instead of an object
-    if(parseInt(breakpointColsObject) > 0) {
+    if (parseInt(breakpointColsObject) > 0) {
       breakpointColsObject = {
         default: breakpointColsObject
-      }
+      };
     }
 
     let matchedBreakpoint = Infinity;
     let columns = breakpointColsObject.default || 2;
 
-    for(let breakpoint in breakpointColsObject) {
+    for (let breakpoint in breakpointColsObject) {
       const optBreakpoint = parseInt(breakpoint);
-      const isCurrentBreakpoint = optBreakpoint > 0 && windowWidth <= optBreakpoint;
+      const isCurrentBreakpoint =
+        optBreakpoint > 0 && windowWidth <= optBreakpoint;
 
-      if(isCurrentBreakpoint && optBreakpoint < matchedBreakpoint) {
+      if (isCurrentBreakpoint && optBreakpoint < matchedBreakpoint) {
         matchedBreakpoint = optBreakpoint;
         columns = breakpointColsObject[breakpoint];
       }
@@ -82,7 +87,7 @@ class Masonry extends React.Component {
 
     columns = Math.max(1, parseInt(columns) || 1);
 
-    if(this.state.columnCount !== columns) {
+    if (this.state.columnCount !== columns) {
       this.setState({
         columnCount: columns
       });
@@ -97,7 +102,7 @@ class Masonry extends React.Component {
     for (let i = 0; i < items.length; i++) {
       const columnIndex = i % currentColumnCount;
 
-      if(!itemsInColumns[columnIndex]) {
+      if (!itemsInColumns[columnIndex]) {
         itemsInColumns[columnIndex] = [];
       }
 
@@ -113,14 +118,16 @@ class Masonry extends React.Component {
     const w = `${100 / childrenInColumns.length}%`;
 
     return childrenInColumns.map((items, i) => {
-      return <div
-        key={i}
-        className={columnClassName}
-        style={{ width: w }}
-        {...column}
-      >
-        {items}
-      </div>;
+      return (
+        <div
+          key={i}
+          className={columnClassName}
+          style={{ width: w }}
+          {...column}
+        >
+          {items}
+        </div>
+      );
     });
   }
 
@@ -129,13 +136,12 @@ class Masonry extends React.Component {
       breakpointCols,
       columnClassName,
       column,
+      elRef,
       ...wrapperProps
     } = this.props;
 
     return (
-      <div
-        {...wrapperProps}
-      >
+      <div ref={elRef} {...wrapperProps}>
         {this.renderColumns()}
       </div>
     );
@@ -144,13 +150,13 @@ class Masonry extends React.Component {
 
 Masonry.propTypes = {
   breakpointCols: PropTypes.object,
-  columnClassName: PropTypes.string,
+  columnClassName: PropTypes.string
 };
 
 Masonry.defaultProps = {
   breakpointCols: {},
-  className: 'my-masonry-grid',
-  columnClassName: 'my-masonry-grid_column'
+  className: "my-masonry-grid",
+  columnClassName: "my-masonry-grid_column"
 };
 
 export default Masonry;
