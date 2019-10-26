@@ -60,7 +60,7 @@ And, CSS:
   background-clip: padding-box;
 }
 
-// Style your items
+/* Style your items */
 .my-masonry-grid_column > div { /* change div to reference your elements you put in <Masonry> */
   background: grey;
   margin-bottom: 30px;
