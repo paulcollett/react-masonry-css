@@ -1,4 +1,4 @@
-A new masonry component powered by CSS to be fast loading and free of jQuery or other dependencies. Build specifically for React projects.
+A new masonry component powered by CSS to be fast loading and free of jQuery or other dependencies. Built specifically for React projects.
 
 ![image](https://user-images.githubusercontent.com/1904774/30821174-491e9670-a1d9-11e7-8b18-250d54858c4f.png)
 
