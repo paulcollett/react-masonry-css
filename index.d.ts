@@ -1,8 +1,9 @@
 import * as React from 'react';
 
 export interface MasonryProps {
-  breakpointCols?: Object;
-  columnClassName?: string;
+  breakpointCols?: number | { default: number, [key: number]: number };
+  columnClassName: string;
+  className: string;
 }
 
 export default class Masonry extends React.Component<MasonryProps & React.HTMLProps<HTMLElement>, any> {

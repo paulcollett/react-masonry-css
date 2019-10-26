@@ -15,8 +15,10 @@
     "publish-package": "git push && git push --tags && npm publish --registry=https://registry.npmjs.org/"
   },
   "files": [
+    "index.d.ts",
     "dist"
   ],
+  "types": "index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/paulcollett/react-masonry-css.git"
