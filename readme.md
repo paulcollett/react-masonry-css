@@ -30,7 +30,9 @@ Between flexbox, css columns, css grid we settled on plain ol' div's and a dab o
 
 Add `react-masonry-css` to your project:
 
-`npm install react-masonry-css --save`
+```bash
+npm install react-masonry-css
+```
 
 In your React Component...
 ```jsx
@@ -86,7 +88,7 @@ const breakpointColumnsObj = {
   breakpointCols={breakpointColumnsObj}
   className="my-masonry-grid"
   columnClassName="my-masonry-grid_column"
-  >
+>
   <div>My Element</div>
   <div>My Element</div>
   <div>My Element</div>
