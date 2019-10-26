@@ -38,8 +38,7 @@
   },
   "homepage": "https://github.com/paulcollett/react-masonry-css#readme",
   "peerDependencies": {
-    "react": "^16.0.0",
-    "prop-types": "^15.0.0"
+    "react": "^16.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

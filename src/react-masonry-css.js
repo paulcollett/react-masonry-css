@@ -1,5 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
+const defaultProps = {
+  breakpointCols: undefined, // optional, number or object { default: number, [key: number]: number }
+  className: undefined, // required, string
+  columnClassName: undefined, // required, string
+
+  // Any React children. Typically an array of JSX items
+  children: undefined,
+
+  // Custom attributes, however it is advised against
+  // using these to prevent unintended issues and future conflicts
+  // ...any other attribute, will be added to the container
+  columnAttrs: undefined, // object, added to the columns
+
+  // Deprecated props
+  // The column property is deprecated.
+  // It is an alias of the `columnAttrs` property
+  column: undefined
+};
+
 
 class Masonry extends React.Component {
   constructor(props) {
@@ -142,15 +161,6 @@ class Masonry extends React.Component {
   }
 }
 
-Masonry.propTypes = {
-  breakpointCols: PropTypes.object,
-  columnClassName: PropTypes.string,
-};
-
-Masonry.defaultProps = {
-  breakpointCols: {},
-  className: 'my-masonry-grid',
-  columnClassName: 'my-masonry-grid_column'
-};
+Masonry.defaultProps = defaultProps;
 
 export default Masonry;
