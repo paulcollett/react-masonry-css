@@ -15,7 +15,7 @@ Between flexbox, css columns, css grid we settled on plain ol' div's and a dab o
 
 #### 😄 What does this do
 * Responsive! ..always
-* IE 10+ CSS Support (and, [IE9](https://github.com/paulcollett/react-masonry-css/issues/14#issuecomment-381427914))
+* IE 10+
 * No Dependencies - Which means no need for jQuery!
 * Works with existing CSS animations on your elements, like fading in on first load
 * CSS powered (Faster to render)
@@ -94,12 +94,11 @@ const breakpointColumnsObj = {
 </Masonry>
 ```
 
-### Options (Props)
+### Configuration Props
 
 * `breakpointCols={{default: 4, 800: 2}}` optional (defaults to 2 columns)
-* `className` and other props are added to the container
-* `columnClassName` optional, string, classname to add to each generated column
-* `columnAttrs` optional, object, additional attributes to add to each generated column
+* `className` for the container
+* `columnClassName` class name added to each generated column
 
 ### Example Demo
 
@@ -122,7 +121,11 @@ items = items.map(function(item) {
   return <div key={item.id}>{item.name}</div>
 });
 
-<Masonry breakpointCols={myBreakpointsAndCols}>
+<Masonry
+  breakpointCols={myBreakpointsAndCols}
+  className="my-masonry-grid"
+  columnClassName="my-masonry-grid_column"
+>
   {items}
 </Masonry>
 ```
@@ -149,7 +152,6 @@ Currently you can use `react-masonry-css` with Preact (https://github.com/develo
 
 ### DummyJS
 Improve your frontend builds with dynamic placeholder images and dummy text from [DummyJs.com](https://dummyjs.com/).
-Made with love from the same dev.
 https://www.npmjs.com/package/dummyjs
 
 ### Suggestions & Issues

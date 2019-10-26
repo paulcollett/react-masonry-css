@@ -64,6 +64,7 @@ class App extends React.Component {
           breakpointCols={breakpointColumnsObj}
           className="my-masonry-grid"
           columnClassName="my-masonry-grid_column"
+          columnAttrs={{ className: 'should be overridden', 'data-test': '', style: { '--test': 'test' }}}
         >
           {items}
         </Masonry>

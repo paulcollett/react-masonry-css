@@ -19,12 +19,13 @@ const defaultProps = {
   column: undefined
 };
 
+const DEFAULT_COLUMNS = 2;
 
 class Masonry extends React.Component {
   constructor(props) {
     super(props);
 
-    // Correct scope for when access externally
+    // Correct scope for when methods are accessed externally
     this.reCalculateColumnCount = this.reCalculateColumnCount.bind(this);
     this.reCalculateColumnCountDebounce = this.reCalculateColumnCountDebounce.bind(this);
 
@@ -33,7 +34,7 @@ class Masonry extends React.Component {
     if (this.props.breakpointCols && this.props.breakpointCols.default) {
       columnCount = this.props.breakpointCols.default
     } else {
-      columnCount = 2
+      columnCount = parseInt(this.props.breakpointCols) || DEFAULT_COLUMNS
     }
 
     this.state = {
@@ -79,15 +80,15 @@ class Masonry extends React.Component {
     const windowWidth = window && window.innerWidth || Infinity;
     let breakpointColsObject = this.props.breakpointCols;
 
-    // Allow passing a single number instead of an object
-    if(parseInt(breakpointColsObject) > 0) {
+    // Allow passing a single number to `breakpointCols` instead of an object
+    if(typeof breakpointColsObject !== 'object') {
       breakpointColsObject = {
-        default: breakpointColsObject
+        default: parseInt(breakpointColsObject) || DEFAULT_COLUMNS
       }
     }
 
     let matchedBreakpoint = Infinity;
-    let columns = breakpointColsObject.default || 2;
+    let columns = breakpointColsObject.default || DEFAULT_COLUMNS;
 
     for(let breakpoint in breakpointColsObject) {
       const optBreakpoint = parseInt(breakpoint);
@@ -111,7 +112,9 @@ class Masonry extends React.Component {
   itemsInColumns() {
     const currentColumnCount = this.state.columnCount;
     const itemsInColumns = new Array(currentColumnCount);
-    const items = this.props.children || [];
+
+    // Force children to be handled as an array
+    const items = [].concat(this.props.children || []);
 
     for (let i = 0; i < items.length; i++) {
       const columnIndex = i % currentColumnCount;
@@ -127,33 +130,77 @@ class Masonry extends React.Component {
   }
 
   renderColumns() {
-    const { column, columnClassName } = this.props;
+    const { column, columnAttrs = {}, columnClassName } = this.props;
     const childrenInColumns = this.itemsInColumns();
-    const w = `${100 / childrenInColumns.length}%`;
+    const columnWidth = `${100 / childrenInColumns.length}%`;
+    let className = columnClassName;
+
+    if(typeof className !== 'string') {
+      this.logDeprecated('The property "columnClassName" requires a string');
+
+      // This is a deprecated default and will be removed soon.
+      if(typeof className === 'undefined') {
+        className = 'my-masonry-grid_column';
+      }
+    }
+
+    const columnAttributes = {
+      // NOTE: the column property is undocumented and considered deprecated.
+      // It is an alias of the `columnAttrs` property
+      ...column,
+      ...columnAttrs,
+      style: {
+        ...columnAttrs.style,
+        width: columnWidth
+      },
+      className
+    };
 
     return childrenInColumns.map((items, i) => {
       return <div
+        {...columnAttributes}
+
         key={i}
-        className={columnClassName}
-        style={{ width: w }}
-        {...column}
       >
         {items}
       </div>;
     });
   }
 
+  logDeprecated(message) {
+    console.error('[Masonry]', message);
+  }
+
   render() {
     const {
+      // ignored
+      children,
       breakpointCols,
       columnClassName,
+      columnAttrs,
       column,
-      ...wrapperProps
+
+      // used
+      className,
+
+      ...rest
     } = this.props;
+
+    let classNameOutput = className;
+
+    if(typeof className !== 'string') {
+      this.logDeprecated('The property "className" requires a string');
+
+      // This is a deprecated default and will be removed soon.
+      if(typeof className === 'undefined') {
+        classNameOutput = 'my-masonry-grid';
+      }
+    }
 
     return (
       <div
-        {...wrapperProps}
+        {...rest}
+        className={classNameOutput}
       >
         {this.renderColumns()}
       </div>
