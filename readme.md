@@ -69,7 +69,7 @@ And, CSS:
 }
 ```
 
-### Resposive Breakpoints
+### Responsive Breakpoints
 
 Different columns can be specified by passing an object containing key's of the window widths and their value as the number of columns. To have a fallback value, use the `default` key.
 
