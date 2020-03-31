@@ -150,8 +150,7 @@ class Masonry extends React.Component {
       ...column,
       ...columnAttrs,
       style: {
-        ...columnAttrs.style,
-        width: columnWidth
+        ...columnAttrs.style
       },
       className
     };
