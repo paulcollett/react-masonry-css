@@ -114,7 +114,7 @@ class Masonry extends React.Component {
     const itemsInColumns = new Array(currentColumnCount);
 
     // Force children to be handled as an array
-    const items = [].concat(this.props.children || []);
+    const items = React.Children.toArray(this.props.children)
 
     for (let i = 0; i < items.length; i++) {
       const columnIndex = i % currentColumnCount;
