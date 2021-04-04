@@ -1,7 +1,7 @@
 {
   "name": "react-masonry-css",
-  "version": "1.0.14",
-  "description": "React Masonry component powered by CSS, dependancy free",
+  "version": "1.0.15",
+  "description": "React Masonry component leveraging CSS to be fast and responsive",
   "main": "dist/react-masonry-css.cjs.js",
   "module": "dist/react-masonry-css.module.js",
   "umd:main": "dist/react-masonry-css.umd.js",
@@ -10,7 +10,7 @@
     "start": "npm run build && serve ./demo",
     "preversion": "npm run build",
     "prepublishOnly": "npm run build",
-    "publish-package": "git push && git push --tags && npm publish --registry=https://registry.npmjs.org/"
+    "publish-package": "git push && git push --tags && npm publish"
   },
   "files": [
     "index.d.ts",
