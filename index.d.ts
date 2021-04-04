@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 export interface MasonryProps {
-  breakpointCols?: number | { default: number, [key: number]: number };
-  columnClassName: string;
+  breakpointCols?: number | { default: number, [key: number]: number } | { [key: number]: number };
+  columnClassName?: string;
   className: string;
 }
 
