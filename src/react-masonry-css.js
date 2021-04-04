@@ -3,7 +3,7 @@ import React from 'react';
 const defaultProps = {
   breakpointCols: undefined, // optional, number or object { default: number, [key: number]: number }
   className: undefined, // required, string
-  columnClassName: undefined, // required, string
+  columnClassName: undefined, // optional, string
 
   // Any React children. Typically an array of JSX items
   children: undefined,
@@ -135,7 +135,7 @@ class Masonry extends React.Component {
     const columnWidth = `${100 / childrenInColumns.length}%`;
     let className = columnClassName;
 
-    if(typeof className !== 'string') {
+    if(className && typeof className !== 'string') {
       this.logDeprecated('The property "columnClassName" requires a string');
 
       // This is a deprecated default and will be removed soon.
