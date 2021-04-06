@@ -1,6 +1,6 @@
 A Masonry component leveraging CSS and native React rendering, for fast, responsive masonry layouts
 
-![image](https://user-images.githubusercontent.com/1904774/30821174-491e9670-a1d9-11e7-8b18-250d54858c4f.png)
+![image](https://puu.sh/GyPSl/7ed96532f1.png)
 
 ### 😎 Why?
 
