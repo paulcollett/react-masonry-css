@@ -13,6 +13,9 @@ const defaultProps = {
   // ...any other attribute, will be added to the container
   columnAttrs: undefined, // object, added to the columns
 
+  // Whether to use the element width for responsiveness calculations.
+  elementResponsive: false,
+
   // Deprecated props
   // The column property is deprecated.
   // It is an alias of the `columnAttrs` property
@@ -28,6 +31,9 @@ class Masonry extends React.Component {
     // Correct scope for when methods are accessed externally
     this.reCalculateColumnCount = this.reCalculateColumnCount.bind(this);
     this.reCalculateColumnCountDebounce = this.reCalculateColumnCountDebounce.bind(this);
+
+    // Refs
+    this.elementRef = React.createRef();
 
     // default state
     let columnCount
@@ -77,7 +83,10 @@ class Masonry extends React.Component {
   }
 
   reCalculateColumnCount() {
-    const windowWidth = window && window.innerWidth || Infinity;
+    const width = this.props.elementResponsive
+        ? this.elementRef.current.offsetWidth
+        : (window && window.innerWidth || Infinity);
+
     let breakpointColsObject = this.props.breakpointCols;
 
     // Allow passing a single number to `breakpointCols` instead of an object
@@ -92,7 +101,7 @@ class Masonry extends React.Component {
 
     for(let breakpoint in breakpointColsObject) {
       const optBreakpoint = parseInt(breakpoint);
-      const isCurrentBreakpoint = optBreakpoint > 0 && windowWidth <= optBreakpoint;
+      const isCurrentBreakpoint = optBreakpoint > 0 && width <= optBreakpoint;
 
       if(isCurrentBreakpoint && optBreakpoint < matchedBreakpoint) {
         matchedBreakpoint = optBreakpoint;
@@ -201,6 +210,7 @@ class Masonry extends React.Component {
       <div
         {...rest}
         className={classNameOutput}
+        ref={this.elementRef}
       >
         {this.renderColumns()}
       </div>

@@ -8520,9 +8520,13 @@
 
 	  if (Object.getOwnPropertySymbols) {
 	    var symbols = Object.getOwnPropertySymbols(object);
-	    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-	      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-	    });
+
+	    if (enumerableOnly) {
+	      symbols = symbols.filter(function (sym) {
+	        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+	      });
+	    }
+
 	    keys.push.apply(keys, symbols);
 	  }
 
@@ -8578,6 +8582,8 @@
 	  // ...any other attribute, will be added to the container
 	  columnAttrs: undefined,
 	  // object, added to the columns
+	  // Whether to use the element width for responsiveness calculations.
+	  elementResponsive: false,
 	  // Deprecated props
 	  // The column property is deprecated.
 	  // It is an alias of the `columnAttrs` property
@@ -8590,7 +8596,9 @@
 	    super(props); // Correct scope for when methods are accessed externally
 
 	    this.reCalculateColumnCount = this.reCalculateColumnCount.bind(this);
-	    this.reCalculateColumnCountDebounce = this.reCalculateColumnCountDebounce.bind(this); // default state
+	    this.reCalculateColumnCountDebounce = this.reCalculateColumnCountDebounce.bind(this); // Refs
+
+	    this.elementRef = React__default['default'].createRef(); // default state
 
 	    let columnCount;
 
@@ -8641,7 +8649,7 @@
 	  }
 
 	  reCalculateColumnCount() {
-	    const windowWidth = window && window.innerWidth || Infinity;
+	    const width = this.props.elementResponsive ? this.elementRef.current.offsetWidth : window && window.innerWidth || Infinity;
 	    let breakpointColsObject = this.props.breakpointCols; // Allow passing a single number to `breakpointCols` instead of an object
 
 	    if (typeof breakpointColsObject !== 'object') {
@@ -8655,7 +8663,7 @@
 
 	    for (let breakpoint in breakpointColsObject) {
 	      const optBreakpoint = parseInt(breakpoint);
-	      const isCurrentBreakpoint = optBreakpoint > 0 && windowWidth <= optBreakpoint;
+	      const isCurrentBreakpoint = optBreakpoint > 0 && width <= optBreakpoint;
 
 	      if (isCurrentBreakpoint && optBreakpoint < matchedBreakpoint) {
 	        matchedBreakpoint = optBreakpoint;
@@ -8752,7 +8760,8 @@
 	    }
 
 	    return /*#__PURE__*/React__default['default'].createElement("div", _extends({}, rest, {
-	      className: classNameOutput
+	      className: classNameOutput,
+	      ref: this.elementRef
 	    }), this.renderColumns());
 	  }
 
