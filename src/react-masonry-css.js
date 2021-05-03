@@ -188,6 +188,7 @@ class Masonry extends React.Component {
       columnClassName,
       columnAttrs,
       column,
+      elementResponsive,
 
       // used
       className,

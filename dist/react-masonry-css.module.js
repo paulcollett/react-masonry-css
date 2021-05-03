@@ -187,10 +187,11 @@ class Masonry extends React.Component {
       columnClassName,
       columnAttrs,
       column,
+      elementResponsive,
       // used
       className
     } = _this$props,
-          rest = _objectWithoutProperties(_this$props, ["children", "breakpointCols", "columnClassName", "columnAttrs", "column", "className"]);
+          rest = _objectWithoutProperties(_this$props, ["children", "breakpointCols", "columnClassName", "columnAttrs", "column", "elementResponsive", "className"]);
 
     let classNameOutput = className;
 
