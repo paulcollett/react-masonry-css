@@ -8461,6 +8461,8 @@
 
 	var React__default = /*#__PURE__*/_interopDefaultLegacy$1(react);
 
+	const _excluded = ["children", "breakpointCols", "columnClassName", "columnAttrs", "column", "className"];
+
 	function _objectWithoutProperties(source, excluded) {
 	  if (source == null) return {};
 
@@ -8520,9 +8522,13 @@
 
 	  if (Object.getOwnPropertySymbols) {
 	    var symbols = Object.getOwnPropertySymbols(object);
-	    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-	      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-	    });
+
+	    if (enumerableOnly) {
+	      symbols = symbols.filter(function (sym) {
+	        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+	      });
+	    }
+
 	    keys.push.apply(keys, symbols);
 	  }
 
@@ -8584,6 +8590,7 @@
 	  column: undefined
 	};
 	const DEFAULT_COLUMNS = 2;
+	const LIMIT_DELTA = 10;
 
 	class Masonry extends React__default['default'].Component {
 	  constructor(props) {
@@ -8601,7 +8608,8 @@
 	    }
 
 	    this.state = {
-	      columnCount
+	      columnCount,
+	      outerHeight: window.outerHeight
 	    };
 	  }
 
@@ -8624,20 +8632,30 @@
 	  }
 
 	  reCalculateColumnCountDebounce() {
-	    if (!window || !window.requestAnimationFrame) {
-	      // IE10+
-	      this.reCalculateColumnCount();
-	      return;
-	    }
+	    setTimeout(() => {
+	      if (Math.abs(this.state.outerHeight - window.outerHeight) < LIMIT_DELTA) {
+	        return;
+	      }
 
-	    if (window.cancelAnimationFrame) {
-	      // IE10+
-	      window.cancelAnimationFrame(this._lastRecalculateAnimationFrame);
-	    }
+	      this.setState(_objectSpread(_objectSpread({}, this.state), {}, {
+	        outerHeight: window.outerHeight
+	      }));
 
-	    this._lastRecalculateAnimationFrame = window.requestAnimationFrame(() => {
-	      this.reCalculateColumnCount();
-	    });
+	      if (!window || !window.requestAnimationFrame) {
+	        // IE10+
+	        this.reCalculateColumnCount();
+	        return;
+	      }
+
+	      if (window.cancelAnimationFrame) {
+	        // IE10+
+	        window.cancelAnimationFrame(this._lastRecalculateAnimationFrame);
+	      }
+
+	      this._lastRecalculateAnimationFrame = window.requestAnimationFrame(() => {
+	        this.reCalculateColumnCount();
+	      });
+	    }, 10);
 	  }
 
 	  reCalculateColumnCount() {
@@ -8666,9 +8684,9 @@
 	    columns = Math.max(1, parseInt(columns) || 1);
 
 	    if (this.state.columnCount !== columns) {
-	      this.setState({
+	      this.setState(_objectSpread(_objectSpread({}, this.state), {}, {
 	        columnCount: columns
-	      });
+	      }));
 	    }
 	  }
 
@@ -8739,7 +8757,7 @@
 	      // used
 	      className
 	    } = _this$props,
-	          rest = _objectWithoutProperties(_this$props, ["children", "breakpointCols", "columnClassName", "columnAttrs", "column", "className"]);
+	          rest = _objectWithoutProperties(_this$props, _excluded);
 
 	    let classNameOutput = className;
 

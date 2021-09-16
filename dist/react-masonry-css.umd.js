@@ -8,13 +8,15 @@
 
   var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 
+  const _excluded = ["children", "breakpointCols", "columnClassName", "columnAttrs", "column", "className"];
+
   function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 
   function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
   function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-  function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
   function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
@@ -39,6 +41,7 @@
     column: undefined
   };
   const DEFAULT_COLUMNS = 2;
+  const LIMIT_DELTA = 10;
 
   class Masonry extends React__default['default'].Component {
     constructor(props) {
@@ -56,7 +59,8 @@
       }
 
       this.state = {
-        columnCount
+        columnCount,
+        outerHeight: window.outerHeight
       };
     }
 
@@ -79,20 +83,30 @@
     }
 
     reCalculateColumnCountDebounce() {
-      if (!window || !window.requestAnimationFrame) {
-        // IE10+
-        this.reCalculateColumnCount();
-        return;
-      }
+      setTimeout(() => {
+        if (Math.abs(this.state.outerHeight - window.outerHeight) < LIMIT_DELTA) {
+          return;
+        }
 
-      if (window.cancelAnimationFrame) {
-        // IE10+
-        window.cancelAnimationFrame(this._lastRecalculateAnimationFrame);
-      }
+        this.setState(_objectSpread(_objectSpread({}, this.state), {}, {
+          outerHeight: window.outerHeight
+        }));
 
-      this._lastRecalculateAnimationFrame = window.requestAnimationFrame(() => {
-        this.reCalculateColumnCount();
-      });
+        if (!window || !window.requestAnimationFrame) {
+          // IE10+
+          this.reCalculateColumnCount();
+          return;
+        }
+
+        if (window.cancelAnimationFrame) {
+          // IE10+
+          window.cancelAnimationFrame(this._lastRecalculateAnimationFrame);
+        }
+
+        this._lastRecalculateAnimationFrame = window.requestAnimationFrame(() => {
+          this.reCalculateColumnCount();
+        });
+      }, 10);
     }
 
     reCalculateColumnCount() {
@@ -121,9 +135,9 @@
       columns = Math.max(1, parseInt(columns) || 1);
 
       if (this.state.columnCount !== columns) {
-        this.setState({
+        this.setState(_objectSpread(_objectSpread({}, this.state), {}, {
           columnCount: columns
-        });
+        }));
       }
     }
 
@@ -194,7 +208,7 @@
         // used
         className
       } = _this$props,
-            rest = _objectWithoutProperties(_this$props, ["children", "breakpointCols", "columnClassName", "columnAttrs", "column", "className"]);
+            rest = _objectWithoutProperties(_this$props, _excluded);
 
       let classNameOutput = className;
 

@@ -20,6 +20,7 @@ const defaultProps = {
 };
 
 const DEFAULT_COLUMNS = 2;
+const LIMIT_DELTA = 10;
 
 class Masonry extends React.Component {
   constructor(props) {
@@ -38,7 +39,8 @@ class Masonry extends React.Component {
     }
 
     this.state = {
-      columnCount
+      columnCount,
+      outerHeight: window.outerHeight,
     };
   }
 
@@ -62,18 +64,29 @@ class Masonry extends React.Component {
   }
 
   reCalculateColumnCountDebounce() {
-    if(!window || !window.requestAnimationFrame) {  // IE10+
-      this.reCalculateColumnCount();
-      return;
-    }
+    setTimeout(() => {
+      if (Math.abs(this.state.outerHeight - window.outerHeight) < LIMIT_DELTA) {
+        return;
+      }
 
-    if(window.cancelAnimationFrame) { // IE10+
-      window.cancelAnimationFrame(this._lastRecalculateAnimationFrame);
-    }
+      this.setState({
+        ...this.state,
+        outerHeight: window.outerHeight,
+      });
 
-    this._lastRecalculateAnimationFrame = window.requestAnimationFrame(() => {
-      this.reCalculateColumnCount();
-    });
+      if(!window || !window.requestAnimationFrame) {  // IE10+
+        this.reCalculateColumnCount();
+        return;
+      }
+
+      if(window.cancelAnimationFrame) { // IE10+
+        window.cancelAnimationFrame(this._lastRecalculateAnimationFrame);
+      }
+
+      this._lastRecalculateAnimationFrame = window.requestAnimationFrame(() => {
+        this.reCalculateColumnCount();
+      });
+    }, 10);
   }
 
   reCalculateColumnCount() {
@@ -104,7 +117,8 @@ class Masonry extends React.Component {
 
     if(this.state.columnCount !== columns) {
       this.setState({
-        columnCount: columns
+        ...this.state,
+        columnCount: columns,
       });
     }
   }
