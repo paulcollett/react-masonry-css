@@ -31,10 +31,10 @@ const reCalculateColumnCount = (breakpointCols) => {
   return columns;
 };
 
-const reCalculateColumnCountDebounce = (reCalculateCallback, lastFrameRef) => {
+const reCalculateColumnCountDebounce = (columnCountCallback, lastFrameRef) => {
   if (!window || !window.requestAnimationFrame) {
     // IE10+
-    return reCalculateCallback();
+    columnCountCallback();
   }
 
   if (window.cancelAnimationFrame) {
@@ -43,7 +43,7 @@ const reCalculateColumnCountDebounce = (reCalculateCallback, lastFrameRef) => {
     window.cancelAnimationFrame(lastFrame);
   }
 
-  lastFrameRef.current = window.requestAnimationFrame(reCalculateCallback);
+  lastFrameRef.current = window.requestAnimationFrame(columnCountCallback);
 };
 
 const itemsInColumns = (currentColumnCount, children) => {
@@ -139,15 +139,16 @@ const Masonry = ({
 
   const lastFrameRef = React.useRef();
 
+  const columnCountCallback = React.useCallback(() => {
+    const columns = reCalculateColumnCount(breakpointCols);
+    if (columnCount !== columns) {
+      setColumnCount(columns);
+    }
+  }, [columnCount]);
+
   React.useLayoutEffect(() => {
     const handleWindowResize = () => {
-      const columns = reCalculateColumnCountDebounce(
-        () => reCalculateColumnCount(breakpointCols),
-        lastFrameRef
-      );
-      if (columnCount !== columns) {
-        setColumnCount(columns);
-      }
+      reCalculateColumnCountDebounce(columnCountCallback, lastFrameRef);
     };
     // window may not be available in some environments
     if (window) {
@@ -159,13 +160,10 @@ const Masonry = ({
         window.removeEventListener("resize", handleWindowResize);
       }
     };
-  }, []);
+  }, [columnCountCallback]);
 
   React.useLayoutEffect(() => {
-    const columns = reCalculateColumnCount(breakpointCols);
-    if (columnCount !== columns) {
-      setColumnCount(columns);
-    }
+    columnCountCallback();
   });
 
   let classNameOutput = className;
