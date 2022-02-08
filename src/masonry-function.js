@@ -144,9 +144,10 @@ const Masonry = ({
     if (columnCount !== columns) {
       setColumnCount(columns);
     }
-  }, [columnCount]);
+  }, [breakpointCols, columnCount]);
 
   React.useLayoutEffect(() => {
+    columnCountCallback();
     const handleWindowResize = () => {
       reCalculateColumnCountDebounce(columnCountCallback, lastFrameRef);
     };
@@ -161,10 +162,6 @@ const Masonry = ({
       }
     };
   }, [columnCountCallback]);
-
-  React.useLayoutEffect(() => {
-    columnCountCallback();
-  });
 
   let classNameOutput = className;
 
